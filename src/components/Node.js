@@ -3,7 +3,7 @@ import '../css/Node.css'
 
 function Node() {
     return (
-        <div className='node'>
+        <div className='node unvisited'>
             
         </div>
     )

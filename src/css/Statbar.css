@@ -1,0 +1,31 @@
+.statbar {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.stat-container {
+    display: flex;
+    flex-direction: column;
+    width: 150px;
+}
+
+.stat-node-container {
+    display: flex;
+    justify-content: center;
+}
+
+.stat-node {
+    display: inline-block;
+    height: 30px;
+    width: 30px;
+    border-radius: 5px;
+}
+
+.stat-description {
+    margin-left: 10px;
+    font-size: 22px;
+}
+
+.stat-value {
+    font-size: 50px;
+}

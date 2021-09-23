@@ -11,7 +11,9 @@ function Menu() {
             <div className='grid-container'>
                 <Grid />
             </div>
-            <Statbar />
+            <div className='statbar-container'>
+                <Statbar />
+            </div>
         </div>
     )
 }

@@ -1,8 +1,36 @@
 .node {
+    display: inline-block;
     height: 30px;
     width: 30px;
     border-radius: 1px;
-    background-color: gainsboro;
     transition: backgroud-color 0.3s ease-in;
     margin: 1px;
+}
+
+.unvisited {
+    background-color: gainsboro;
+}
+
+.wall {
+    background-color: rgb(12, 35, 46);
+}
+
+.start {
+    background-color: rgb(65, 158, 65);
+}
+
+.end {
+    background-color: rgb(206, 65, 76);
+}
+
+.visited {
+    background-color: darkcyan;
+}
+
+.frontier {
+    background-color: gold;
+}
+
+.path {
+    background-color: rgb(243, 116, 194);
 }
