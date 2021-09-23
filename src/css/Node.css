@@ -1,0 +1,8 @@
+.node {
+    height: 30px;
+    width: 30px;
+    border-radius: 1px;
+    background-color: gainsboro;
+    transition: backgroud-color 0.3s ease-in;
+    margin: 1px;
+}

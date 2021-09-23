@@ -1,8 +1,9 @@
 import React from 'react'
+import '../css/Node.css'
 
 function Node() {
     return (
-        <div>
+        <div className='node'>
             
         </div>
     )
