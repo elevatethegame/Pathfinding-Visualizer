@@ -1,0 +1,49 @@
+.navbar {
+    background-color: rgb(33, 61, 78);
+    height: 70px;
+    display: flex;
+    justify-content: center;
+    color: white;
+    font-size: 17px;
+}
+
+.navbar-list-container {
+    width: 80%;
+    display: flex;
+    justify-content: center;
+}
+
+.navbar-list {
+    display: flex;
+    list-style-type: none;
+    width: 100%;
+    margin: 0;
+    align-items: center;
+}
+
+.navbar-item {
+    width: 20%;
+    height: 80%;
+}
+
+.navbar-button {
+    color: inherit;
+    border: none;
+    font: inherit;
+    cursor: pointer;
+    height: 100%;
+    width: 100%;
+}
+
+.navbar-normal-button {
+    background: none;
+}
+
+.navbar-normal-button:hover {
+    color: turquoise;
+}
+
+.navbar-run-button {
+    background-color: darkgrey;
+    border-radius: 10px;
+}
