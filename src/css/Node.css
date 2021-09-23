@@ -1,10 +1,10 @@
 .node {
     display: inline-block;
-    height: 30px;
-    width: 30px;
+    height: 31px;
+    width: 31px;
     border-radius: 1px;
     transition: backgroud-color 0.3s ease-in;
-    margin: 1px;
+    outline: 2px solid white;
 }
 
 .unvisited {
@@ -12,7 +12,7 @@
 }
 
 .wall {
-    background-color: rgb(12, 35, 46);
+    background-color: rgb(33, 61, 78);
 }
 
 .start {

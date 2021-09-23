@@ -1,6 +1,7 @@
 .statbar {
     display: flex;
     justify-content: space-evenly;
+    width: 90%;
 }
 
 .stat-container {
