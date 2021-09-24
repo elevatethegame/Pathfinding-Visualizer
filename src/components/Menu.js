@@ -2,6 +2,7 @@ import React from 'react'
 import Grid from './Grid'
 import Navbar from './Navbar'
 import Statbar from './Statbar'
+import Carousel from './Carousel'
 import '../css/Menu.css'
 
 function Menu() {
@@ -14,6 +15,7 @@ function Menu() {
             <div className='statbar-container'>
                 <Statbar />
             </div>
+            {/* <Carousel /> */}
         </div>
     )
 }
