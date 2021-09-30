@@ -1,15 +1,11 @@
-import { isAlgorithmRunning } from '../AlgorithmUtil'
+import { isAlgorithmRunning, isAlgorithmCompleted } from '../AlgorithmUtil'
+import buckets from 'buckets-js'
 
-
-export const runBFS = (grid, toggleVisitedNode) => {
+export const runBFS = (startNode, endNode, grid, toggleVisitedNode) => {
 
     // While the algorithm has not been completed or paused
-    // while (isAlgorithmRunning()) {
-
-    // }
-
-    console.log(grid[0][0])
-    toggleVisitedNode(0, 0)
-    console.log(grid[0][0])
+    while (isAlgorithmRunning() && !isAlgorithmCompleted()) {
+        
+    }
 
 }
