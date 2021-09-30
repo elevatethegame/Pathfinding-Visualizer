@@ -1,12 +1,11 @@
 import React from 'react'
 import '../css/Navbar.css'
-import { toggleAlgorithmRunning } from '../actions'
-import { connect } from 'react-redux'
+
 
 function Navbar(props) {
 
     const handleClickRun = () => {
-        props.toggleAlgorithmRunning()
+        props.runAlgorithm()
     }
 
     return (
@@ -34,10 +33,4 @@ function Navbar(props) {
     )
 }
 
-const mapDispatchToProps = (dispatch) => {
-    return {
-        toggleAlgorithmRunning: () => dispatch(toggleAlgorithmRunning())
-    }
-}
-
-export default connect(null, mapDispatchToProps)(Navbar)
+export default Navbar
