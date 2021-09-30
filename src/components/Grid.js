@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { generateRowKey, generateCellKey } from '../util/GridUtil'
+import { generateRowKey, generateCellKey } from '../utils/GridUtil'
 import Node from './Node'
 import '../css/Grid.css'
 

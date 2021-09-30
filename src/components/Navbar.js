@@ -1,7 +1,14 @@
 import React from 'react'
 import '../css/Navbar.css'
+import { toggleAlgorithmRunning } from '../actions'
+import { connect } from 'react-redux'
 
-function Navbar() {
+function Navbar(props) {
+
+    const handleClickRun = () => {
+        props.toggleAlgorithmRunning()
+    }
+
     return (
         <nav className='navbar'>
             <div className='navbar-list-container'>
@@ -13,7 +20,7 @@ function Navbar() {
                         <button  className='navbar-button navbar-normal-button'>Select Algorithm</button>
                     </li>
                     <li className='navbar-item'>
-                        <button disabled={'true'} className='navbar-button navbar-run-button'>Run</button>
+                        <button className='navbar-button navbar-run-button' onClick={handleClickRun}>Run</button>
                     </li>  
                     <li className='navbar-item'>
                         <button  className='navbar-button navbar-normal-button'>Clear Path</button>
@@ -27,4 +34,10 @@ function Navbar() {
     )
 }
 
-export default Navbar
+const mapDispatchToProps = (dispatch) => {
+    return {
+        toggleAlgorithmRunning: () => dispatch(toggleAlgorithmRunning())
+    }
+}
+
+export default connect(null, mapDispatchToProps)(Navbar)
