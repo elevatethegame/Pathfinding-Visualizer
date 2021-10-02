@@ -6,10 +6,10 @@ import Carousel from './Carousel'
 import '../css/Menu.css'
 import { setBFSAlgorithm, toggleVisitedNode, toggleFrontierNode, setStartNode, setEndNode,
     setAlgorithmState, readyAlgorithm, runAlgorithm, pauseAlgorithm, completeAlgorithm,
-    togglePathNode, setParentNode, generateWalls, clearBoard } from '../actions'
+    togglePathNode, setParentNode, generateWalls, clearBoard, clearPath, clearAlgorithmState } from '../actions'
 import { connect } from 'react-redux'
 import { runBFS } from '../utils/Algorithms/BFS'
-import { isAlgorithmRunning } from '../utils/AlgorithmUtil'
+import { isAlgorithmRunning, isAlgorithmCompleted } from '../utils/AlgorithmUtil'
 
 function Menu(props) {
 
@@ -26,7 +26,7 @@ function Menu(props) {
         switch (props.algorithmSelected) {
             case 'BFS':
                 state = await runBFS(props.algorithmState, props.startNode, props.endNode, props.grid, props.toggleVisitedNode, 
-                    props.toggleFrontierNode, props.togglePathNode, props.completeAlgorithm, props.setParentNode)
+                    props.toggleFrontierNode, props.togglePathNode, props.completeAlgorithm, props.setParentNode, props.clearAlgorithmState)
                 break
             case 'DFS':
                 break
@@ -38,7 +38,11 @@ function Menu(props) {
                 break
         }
 
-        props.setAlgorithmState(state)
+        if (isAlgorithmCompleted()) {
+            props.clearAlgorithmState()
+        } else {
+            props.setAlgorithmState(state)
+        }
         
     }
 
@@ -48,7 +52,9 @@ function Menu(props) {
                 algorithmStatus={props.algorithmStatus}
                 algorithmSelected={props.algorithmSelected}
                 generateWalls={props.generateWalls}
-                clearBoard={props.clearBoard} />
+                clearBoard={props.clearBoard}
+                clearPath={props.clearPath}
+                readyAlgorithm={props.readyAlgorithm} />
             <div className='grid-container'>
                 <Grid />
             </div>
@@ -67,6 +73,7 @@ const mapDispatchToProps = (dispatch) => {
         toggleFrontierNode: (row, col) => dispatch(toggleFrontierNode(row, col)),
         togglePathNode: (row, col) => dispatch(togglePathNode(row, col)),
         setAlgorithmState: (state) => dispatch(setAlgorithmState(state)),
+        clearAlgorithmState: () => dispatch(clearAlgorithmState()),
         readyAlgorithm: () => dispatch(readyAlgorithm()),
         runAlgorithm: () => dispatch(runAlgorithm()),
         pauseAlgorithm: () => dispatch(pauseAlgorithm()),
@@ -74,6 +81,7 @@ const mapDispatchToProps = (dispatch) => {
         setParentNode: (row, col, parent) => dispatch(setParentNode(row, col, parent)),
         generateWalls: () => dispatch(generateWalls()),
         clearBoard: () => dispatch(clearBoard()),
+        clearPath: () => dispatch(clearPath()),
     }
 }
 
