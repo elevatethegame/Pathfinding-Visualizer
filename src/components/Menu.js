@@ -4,18 +4,28 @@ import Navbar from './Navbar'
 import Statbar from './Statbar'
 import Carousel from './Carousel'
 import '../css/Menu.css'
-import { toggleAlgorithmRunning, setBFSAlgorithm, toggleVisitedNode, toggleFrontierNode, setStartNode, setEndNode } from '../actions'
+import { setBFSAlgorithm, toggleVisitedNode, toggleFrontierNode, setStartNode, setEndNode
+    ,setAlgorithmState, readyAlgorithm, runAlgorithm, pauseAlgorithm, completeAlgorithm } from '../actions'
 import { connect } from 'react-redux'
 import { runBFS } from '../utils/Algorithms/BFS'
+import { isAlgorithmRunning } from '../utils/AlgorithmUtil'
 
 function Menu(props) {
 
-    const runAlgorithm = () => {
-        props.toggleAlgorithmRunning()
+    const runAlgorithm = async () => {
+
+        if (isAlgorithmRunning()) {
+            props.pauseAlgorithm()
+            return
+        }
+        
+        props.runAlgorithm()
+        
+        let state;
         switch (props.algorithmSelected) {
             case 'BFS':
-                runBFS(props.algorithmState, props.startNode, props.endNode, props.grid, props.toggleVisitedNode, 
-                    props.toggleFrontierNode, props.toggleAlgorithmRunning)
+                state = await runBFS(props.algorithmState, props.startNode, props.endNode, props.grid, props.toggleVisitedNode, 
+                    props.toggleFrontierNode, props.completeAlgorithm)
                 break
             case 'DFS':
                 break
@@ -26,11 +36,15 @@ function Menu(props) {
             default:
                 break
         }
+
+        props.setAlgorithmState(state)
+        
     }
 
     return (
         <div>
-            <Navbar runAlgorithm={runAlgorithm} />
+            <Navbar runAlgorithm={runAlgorithm} 
+                algorithmStatus={props.algorithmStatus}/>
             <div className='grid-container'>
                 <Grid />
             </div>
@@ -44,10 +58,14 @@ function Menu(props) {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        toggleAlgorithmRunning: () => dispatch(toggleAlgorithmRunning()),
         setBFSAlgorithm: () => dispatch(setBFSAlgorithm()),
         toggleVisitedNode: (row, col) => dispatch(toggleVisitedNode(row, col)),
         toggleFrontierNode: (row, col) => dispatch(toggleFrontierNode(row, col)),
+        setAlgorithmState: (state) => dispatch(setAlgorithmState(state)),
+        readyAlgorithm: () => dispatch(readyAlgorithm()),
+        runAlgorithm: () => dispatch(runAlgorithm()),
+        pauseAlgorithm: () => dispatch(pauseAlgorithm()),
+        completeAlgorithm: () => dispatch(completeAlgorithm()),
     }
 }
 
@@ -58,6 +76,7 @@ const mapStateToProps = (state) => {
         startNode: state.startNode,
         endNode: state.endNode,
         algorithmState: state.algorithmState,
+        algorithmStatus: state.algorithmStatus
     }
 }
 
