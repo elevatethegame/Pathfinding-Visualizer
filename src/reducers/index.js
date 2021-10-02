@@ -4,7 +4,12 @@ import { TOGGLE_ALGORITHM_RUNNING, SET_BFS_ALGORITHM, SET_ASTAR_ALGORITHM, SET_D
     TOGGLE_END_NODE, TOGGLE_FRONTIER_NODE, TOGGLE_PATH_NODE, TOGGLE_START_NODE, TOGGLE_VISITED_NODE, TOGGLE_WALL_NODE,
     TOGGLE_ALGORITHM_COMPLETED, SET_ALGORITHM_STATE, CLEAR_ALGORITHM_STATE, SET_START_NODE, SET_END_NODE } from '../actions'
 
-function board(state = { grid: generateEmptyGrid() }, action) {
+const numRows = 20  // Grid Dimensions
+const numCols = 50
+const start = [9, 15]  // Start Node
+const end = [9, 35]  // End Node
+
+function board(state = { grid: generateEmptyGrid(numRows, numCols, start, end) }, action) {
     switch(action.type) {
         case TOGGLE_VISITED_NODE:
             return {
@@ -74,7 +79,7 @@ function algorithmSelected(state = 'BFS', action) {  // we set initial to BFS fo
     }
 }
 
-function algorithmState(state = null, action) {  // we set initial to BFS for now to test
+function algorithmState(state = null, action) {  
     switch(action.type) {
         case SET_ALGORITHM_STATE:
             return action.payload;
@@ -85,7 +90,7 @@ function algorithmState(state = null, action) {  // we set initial to BFS for no
     }
 }
 
-function startNode(state = [10, 15], action) {  // we set initial to BFS for now to test
+function startNode(state = start, action) {  
     switch(action.type) {
         case SET_START_NODE:
             return [action.row, action.col];
@@ -94,7 +99,7 @@ function startNode(state = [10, 15], action) {  // we set initial to BFS for now
     }
 }
 
-function endNode(state = [10, 35], action) {  // we set initial to BFS for now to test
+function endNode(state = end, action) {  
     switch(action.type) {
         case SET_END_NODE:
             return [action.row, action.col];

@@ -1,4 +1,12 @@
-
+// Node constructor
+function Node() {
+    this.isStartNode = false
+    this.isEndNode = false
+    this.isWallNode = false
+    this.isFrontierNode = false
+    this.isVisitedNode = false
+    this.isPathNode = false
+}
 
 // Key generators for React Grid mapping to rows and cells
 export const generateRowKey = (row) => {
@@ -9,25 +17,17 @@ export const generateCellKey = (row, col) => {
     return row.toString() + '#' + col.toString()
 }
 
-const numRows = 20;
-const numCols = 50;
-
 // Utilities for generating grids
-export const generateEmptyGrid = () => {
+export const generateEmptyGrid = (numRows, numCols, startNode, endNode) => {
     const grid = new Array(0)
     for (let i = 0; i < numRows; i++) {
         grid.push(new Array(0))
         for (let j = 0; j < numCols; j++) {
-            grid[i].push({
-                isStartNode: false,
-                isEndNode: false,
-                isWallNode: false,
-                isFrontierNode: false,
-                isVisitedNode: false,
-                isPathNode: false
-            })
+            grid[i].push(new Node())
         }
     }
+    grid[startNode[0]][startNode[1]].isStartNode = true
+    grid[endNode[0]][endNode[1]].isEndNode = true
     return grid
 }
 

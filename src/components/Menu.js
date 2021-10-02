@@ -4,17 +4,18 @@ import Navbar from './Navbar'
 import Statbar from './Statbar'
 import Carousel from './Carousel'
 import '../css/Menu.css'
-import { toggleAlgorithmRunning, setBFSAlgorithm, toggleVisitedNode, setStartNode, setEndNode } from '../actions'
+import { toggleAlgorithmRunning, setBFSAlgorithm, toggleVisitedNode, toggleFrontierNode, setStartNode, setEndNode } from '../actions'
 import { connect } from 'react-redux'
 import { runBFS } from '../utils/Algorithms/BFS'
 
 function Menu(props) {
 
     const runAlgorithm = () => {
-        // props.toggleAlgorithmRunning()
+        props.toggleAlgorithmRunning()
         switch (props.algorithmSelected) {
             case 'BFS':
-                runBFS(props.startNode, props.endNode, props.grid, props.toggleVisitedNode)
+                runBFS(props.algorithmState, props.startNode, props.endNode, props.grid, props.toggleVisitedNode, 
+                    props.toggleFrontierNode, props.toggleAlgorithmRunning)
                 break
             case 'DFS':
                 break
@@ -46,6 +47,7 @@ const mapDispatchToProps = (dispatch) => {
         toggleAlgorithmRunning: () => dispatch(toggleAlgorithmRunning()),
         setBFSAlgorithm: () => dispatch(setBFSAlgorithm()),
         toggleVisitedNode: (row, col) => dispatch(toggleVisitedNode(row, col)),
+        toggleFrontierNode: (row, col) => dispatch(toggleFrontierNode(row, col)),
     }
 }
 
@@ -55,6 +57,7 @@ const mapStateToProps = (state) => {
         algorithmSelected: state.algorithmSelected,
         startNode: state.startNode,
         endNode: state.endNode,
+        algorithmState: state.algorithmState,
     }
 }
 
