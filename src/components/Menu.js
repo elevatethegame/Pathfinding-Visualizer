@@ -4,8 +4,9 @@ import Navbar from './Navbar'
 import Statbar from './Statbar'
 import Carousel from './Carousel'
 import '../css/Menu.css'
-import { setBFSAlgorithm, toggleVisitedNode, toggleFrontierNode, setStartNode, setEndNode
-    ,setAlgorithmState, readyAlgorithm, runAlgorithm, pauseAlgorithm, completeAlgorithm } from '../actions'
+import { setBFSAlgorithm, toggleVisitedNode, toggleFrontierNode, setStartNode, setEndNode,
+    setAlgorithmState, readyAlgorithm, runAlgorithm, pauseAlgorithm, completeAlgorithm,
+    } from '../actions'
 import { connect } from 'react-redux'
 import { runBFS } from '../utils/Algorithms/BFS'
 import { isAlgorithmRunning } from '../utils/AlgorithmUtil'
@@ -44,7 +45,8 @@ function Menu(props) {
     return (
         <div>
             <Navbar runAlgorithm={runAlgorithm} 
-                algorithmStatus={props.algorithmStatus}/>
+                algorithmStatus={props.algorithmStatus}
+                algorithmSelected={props.algorithmSelected}/>
             <div className='grid-container'>
                 <Grid />
             </div>
@@ -66,6 +68,7 @@ const mapDispatchToProps = (dispatch) => {
         runAlgorithm: () => dispatch(runAlgorithm()),
         pauseAlgorithm: () => dispatch(pauseAlgorithm()),
         completeAlgorithm: () => dispatch(completeAlgorithm()),
+        
     }
 }
 
@@ -76,7 +79,7 @@ const mapStateToProps = (state) => {
         startNode: state.startNode,
         endNode: state.endNode,
         algorithmState: state.algorithmState,
-        algorithmStatus: state.algorithmStatus
+        algorithmStatus: state.algorithmStatus,
     }
 }
 

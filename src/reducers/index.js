@@ -47,7 +47,7 @@ function board(state = { grid: generateEmptyGrid(numRows, numCols, start, end) }
     }
 } 
 
-function algorithmStatus(state = 'UNSELECTED', action) {
+function algorithmStatus(state = 'READY', action) {
     switch(action.type) {
         case READY_ALGORITHM:
             return 'READY';

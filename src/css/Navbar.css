@@ -44,6 +44,25 @@
 }
 
 .navbar-run-button {
-    background-color: darkgrey;
     border-radius: 10px;
+}
+
+.unselected {
+    background-color: darkgrey;
+}
+
+.run {
+    background-color: rgb(71, 192, 71);
+}
+
+.resume {
+    background-color: rgb(71, 192, 71);
+}
+
+.pause {
+    background-color: rgb(211, 48, 48);
+}
+
+.completed {
+    background-color: rgb(211, 199, 37);
 }

@@ -2,10 +2,29 @@ import React from 'react'
 import '../css/Navbar.css'
 
 
-function Navbar(props) {
+function Navbar({ algorithmStatus, algorithmSelected, runAlgorithm }) {
 
     const handleClickRun = () => {
-        props.runAlgorithm()
+        runAlgorithm()
+    }
+
+    let runButtonText;
+    let runButtonClass;
+    if (algorithmStatus === 'UNSELECTED') {
+        runButtonText = 'Select an Algorithm'
+        runButtonClass = 'unselected'
+    } else if (algorithmStatus === 'READY') {
+        runButtonText = 'Run'
+        runButtonClass = 'run'
+    } else if (algorithmStatus === 'PAUSED') {
+        runButtonText = 'Resume'
+        runButtonClass = 'resume'
+    } else if (algorithmStatus === 'RUNNING') {
+        runButtonText = 'Pause'
+        runButtonClass = 'pause'
+    } else {  // if 'COMPLETED'
+        runButtonText = 'Completed'
+        runButtonClass = 'completed'
     }
 
     return (
@@ -19,7 +38,9 @@ function Navbar(props) {
                         <button  className='navbar-button navbar-normal-button'>Select Algorithm</button>
                     </li>
                     <li className='navbar-item'>
-                        <button className='navbar-button navbar-run-button' onClick={handleClickRun}>Run</button>
+                        <button className={`navbar-button navbar-run-button ${runButtonClass}`} onClick={handleClickRun}>
+                            {runButtonText}
+                        </button>
                     </li>  
                     <li className='navbar-item'>
                         <button  className='navbar-button navbar-normal-button'>Clear Path</button>
