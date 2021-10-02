@@ -19,6 +19,7 @@ export const PAUSE_ALGORITHM = "PAUSE_ALGORITHM"
 export const COMPLETE_ALGORITHM = "COMPLETE_ALGORITHM" 
 export const SET_PARENT_NODE = "SET_PARENT_NODE"
 export const GENERATE_WALLS = "GENERATE_WALLS"
+export const CLEAR_BOARD = "CLEAR_BOARD"
 
 // action creators for grid state
 export const toggleVisitedNode = (row, col) => {
@@ -73,6 +74,12 @@ export const setParentNode = (row, col, parent) => {
 export const generateWalls = () => {
     return {
         type: GENERATE_WALLS
+    }
+}
+
+export const clearBoard = () => {
+    return {
+        type: CLEAR_BOARD
     }
 }
 

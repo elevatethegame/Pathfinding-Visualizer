@@ -89,3 +89,20 @@ export const generateWalls = (grid) => {
     }
     return grid
 }
+
+export const clearBoard = (grid) => {
+    grid = grid.slice()
+    for (let i = 0; i < grid.length; i++) {
+        for (let j = 0; j < grid[0].length; j++) {
+            const node = grid[i][j]
+            if (!node.isStartNode && !node.isEndNode) {
+                grid[i][j] = new Node()
+            } else {
+                node.isWallNode = false
+                node.isVisitedNode = false
+                node.isPathNode = false
+            }
+        }
+    }
+    return grid
+}

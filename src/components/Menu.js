@@ -6,7 +6,7 @@ import Carousel from './Carousel'
 import '../css/Menu.css'
 import { setBFSAlgorithm, toggleVisitedNode, toggleFrontierNode, setStartNode, setEndNode,
     setAlgorithmState, readyAlgorithm, runAlgorithm, pauseAlgorithm, completeAlgorithm,
-    togglePathNode, setParentNode, generateWalls } from '../actions'
+    togglePathNode, setParentNode, generateWalls, clearBoard } from '../actions'
 import { connect } from 'react-redux'
 import { runBFS } from '../utils/Algorithms/BFS'
 import { isAlgorithmRunning } from '../utils/AlgorithmUtil'
@@ -47,7 +47,8 @@ function Menu(props) {
             <Navbar runAlgorithm={runAlgorithm} 
                 algorithmStatus={props.algorithmStatus}
                 algorithmSelected={props.algorithmSelected}
-                generateWalls={props.generateWalls} />
+                generateWalls={props.generateWalls}
+                clearBoard={props.clearBoard} />
             <div className='grid-container'>
                 <Grid />
             </div>
@@ -72,6 +73,7 @@ const mapDispatchToProps = (dispatch) => {
         completeAlgorithm: () => dispatch(completeAlgorithm()),
         setParentNode: (row, col, parent) => dispatch(setParentNode(row, col, parent)),
         generateWalls: () => dispatch(generateWalls()),
+        clearBoard: () => dispatch(clearBoard()),
     }
 }
 

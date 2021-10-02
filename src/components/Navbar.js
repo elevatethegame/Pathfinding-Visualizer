@@ -2,7 +2,7 @@ import React from 'react'
 import '../css/Navbar.css'
 
 
-function Navbar({ algorithmStatus, algorithmSelected, runAlgorithm, generateWalls }) {
+function Navbar({ algorithmStatus, algorithmSelected, runAlgorithm, generateWalls, clearBoard }) {
 
     const handleClickRun = () => {
         runAlgorithm()
@@ -10,6 +10,10 @@ function Navbar({ algorithmStatus, algorithmSelected, runAlgorithm, generateWall
 
     const handleClickGenerateWalls = () => {
         generateWalls()
+    }
+
+    const handleClickClearBoard = () => {
+        clearBoard()
     }
 
     let runButtonText;
@@ -53,7 +57,7 @@ function Navbar({ algorithmStatus, algorithmSelected, runAlgorithm, generateWall
                         <button  className='navbar-button navbar-normal-button'>Clear Path</button>
                     </li>
                     <li className='navbar-item'>
-                        <button  className='navbar-button navbar-normal-button'>Clear Board</button>
+                        <button  className='navbar-button navbar-normal-button' onClick={handleClickClearBoard}>Clear Board</button>
                     </li>
                 </ul>
             </div>
