@@ -17,6 +17,7 @@ export const RUN_ALGORITHM = "RUN_ALGORITHM"
 export const READY_ALGORITHM = "READY_ALGORITHM"
 export const PAUSE_ALGORITHM = "PAUSE_ALGORITHM"
 export const COMPLETE_ALGORITHM = "COMPLETE_ALGORITHM" 
+export const SET_PARENT_NODE = "SET_PARENT_NODE"
 
 // action creators for grid state
 export const toggleVisitedNode = (row, col) => {
@@ -58,6 +59,13 @@ export const togglePathNode = (row, col) => {
     return {
         type: TOGGLE_PATH_NODE,
         payload: {row, col}
+    }
+}
+
+export const setParentNode = (row, col, parent) => {
+    return {
+        type: SET_PARENT_NODE,
+        payload: {row, col, parent}
     }
 }
 

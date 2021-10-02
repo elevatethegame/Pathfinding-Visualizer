@@ -6,6 +6,7 @@ function Node() {
     this.isFrontierNode = false
     this.isVisitedNode = false
     this.isPathNode = false
+    this.parent = null
 }
 
 // Key generators for React Grid mapping to rows and cells
@@ -64,5 +65,11 @@ export const setEndNode = (grid, {row, col}) => {
 export const setPathNode = (grid, {row, col}) => {
     grid = grid.slice()
     grid[row][col].isPathNode = !grid[row][col].isPathNode;
+    return grid
+}
+
+export const setParentNode = (grid, {row, col, parent}) => {
+    grid = grid.slice()
+    grid[row][col].parent = parent;
     return grid
 }

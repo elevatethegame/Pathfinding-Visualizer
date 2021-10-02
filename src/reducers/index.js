@@ -1,9 +1,10 @@
 import { combineReducers } from "redux"
-import { generateEmptyGrid, setEndNode, setFrontierNode, setPathNode, setStartNode, setVisitedNode, setWallNode } from "../utils/GridUtil"
+import { generateEmptyGrid, setEndNode, setFrontierNode, setPathNode, setStartNode, setVisitedNode, setWallNode,
+    setParentNode } from "../utils/GridUtil"
 import { SET_BFS_ALGORITHM, SET_ASTAR_ALGORITHM, SET_DFS_ALGORITHM, SET_GREEDY_ALGORITHM,
     TOGGLE_END_NODE, TOGGLE_FRONTIER_NODE, TOGGLE_PATH_NODE, TOGGLE_START_NODE, TOGGLE_VISITED_NODE, TOGGLE_WALL_NODE,
-    SET_ALGORITHM_STATE, CLEAR_ALGORITHM_STATE, SET_START_NODE, SET_END_NODE,
-    READY_ALGORITHM, COMPLETE_ALGORITHM, PAUSE_ALGORITHM, RUN_ALGORITHM } from '../actions'
+    SET_ALGORITHM_STATE, CLEAR_ALGORITHM_STATE, SET_START_NODE, SET_END_NODE, READY_ALGORITHM, COMPLETE_ALGORITHM,
+    PAUSE_ALGORITHM, RUN_ALGORITHM, SET_PARENT_NODE } from '../actions'
 
 const numRows = 20  // Grid Dimensions
 const numCols = 50
@@ -41,6 +42,11 @@ function board(state = { grid: generateEmptyGrid(numRows, numCols, start, end) }
             return {
                 ...state,
                 grid: setPathNode(state.grid, action.payload)
+            }
+        case SET_PARENT_NODE:
+            return {
+                ...state,
+                grid: setParentNode(state.grid, action.payload)
             }
         default:
             return state

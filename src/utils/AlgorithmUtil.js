@@ -1,4 +1,5 @@
 import store from "../"
+import buckets from 'buckets-js'
 
 export const isAlgorithmRunning = () => {
     return store.getState().algorithmStatus === 'RUNNING'
@@ -25,6 +26,20 @@ export const shouldEnqueueNode = (node, grid) => {
     const i = node[0]
     const j = node[1]
     return i >= 0 && i < m && j >= 0 && j < n && !grid[i][j].isVisitedNode && !grid[i][j].isWallNode && !grid[i][j].isFrontierNode
+}
+
+export const tracePath = async (endNode, grid, togglePathNode) => {
+    let node = endNode
+    const stack = buckets.Stack() 
+    while (node != null) {
+        stack.push(node)
+        node = grid[node[0]][node[1]].parent
+    }
+    while (!stack.isEmpty()) {
+        node = stack.pop()
+        togglePathNode(node[0], node[1])
+        await sleep(40)
+    }
 }
 
 export const sleep = (duration) => {
