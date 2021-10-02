@@ -10,9 +10,11 @@ function Navbar({ algorithmStatus, algorithmSelected, runAlgorithm }) {
 
     let runButtonText;
     let runButtonClass;
+    let runButtonDisabled = '';
     if (algorithmStatus === 'UNSELECTED') {
         runButtonText = 'Select an Algorithm'
         runButtonClass = 'unselected'
+        runButtonDisabled = 'true'
     } else if (algorithmStatus === 'READY') {
         runButtonText = 'Run'
         runButtonClass = 'run'
@@ -25,6 +27,7 @@ function Navbar({ algorithmStatus, algorithmSelected, runAlgorithm }) {
     } else {  // if 'COMPLETED'
         runButtonText = 'Completed'
         runButtonClass = 'completed'
+        runButtonDisabled = 'true'
     }
 
     return (
@@ -38,7 +41,7 @@ function Navbar({ algorithmStatus, algorithmSelected, runAlgorithm }) {
                         <button  className='navbar-button navbar-normal-button'>Select Algorithm</button>
                     </li>
                     <li className='navbar-item'>
-                        <button className={`navbar-button navbar-run-button ${runButtonClass}`} onClick={handleClickRun}>
+                        <button className={`navbar-button navbar-run-button ${runButtonClass}`} disabled={runButtonDisabled} onClick={handleClickRun}>
                             {runButtonText}
                         </button>
                     </li>  
