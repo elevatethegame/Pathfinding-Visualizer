@@ -3,7 +3,7 @@
     height: 31px;
     width: 31px;
     border-radius: 1px;
-    transition: backgroud-color 0.3s ease-in;
+    transition: background-color 0.3s ease-out;
     outline: 2px solid white;
 }
 
