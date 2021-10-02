@@ -20,6 +20,7 @@ export const COMPLETE_ALGORITHM = "COMPLETE_ALGORITHM"
 export const SET_PARENT_NODE = "SET_PARENT_NODE"
 export const GENERATE_WALLS = "GENERATE_WALLS"
 export const CLEAR_BOARD = "CLEAR_BOARD"
+export const CLEAR_PATH = "CLEAR_PATH"
 
 // action creators for grid state
 export const toggleVisitedNode = (row, col) => {
@@ -80,6 +81,12 @@ export const generateWalls = () => {
 export const clearBoard = () => {
     return {
         type: CLEAR_BOARD
+    }
+}
+
+export const clearPath = () => {
+    return {
+        type: CLEAR_PATH
     }
 }
 

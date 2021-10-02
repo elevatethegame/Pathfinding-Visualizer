@@ -5,6 +5,10 @@ export const isAlgorithmRunning = () => {
     return store.getState().algorithmStatus === 'RUNNING'
 }
 
+export const isAlgorithmCompleted = () => {
+    return store.getState().algorithmStatus === 'COMPLETED'
+}
+
 export const nodeEquals = (node_1, node_2) => {
     return node_1[0] === node_2[0] && node_1[1] === node_2[1]
 }

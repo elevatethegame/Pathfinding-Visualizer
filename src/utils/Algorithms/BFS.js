@@ -3,7 +3,7 @@ import { isAlgorithmRunning, nodeEquals, shouldEnqueueNode, getNeighbors,
 import buckets from 'buckets-js'
 
 export const runBFS = async (queue, startNode, endNode, grid, toggleVisitedNode, toggleFrontierNode,
-    togglePathNode, completeAlgorithm, setParentNode) => {
+    togglePathNode, completeAlgorithm, setParentNode, clearAlgorithmState) => {
         
     // While the algorithm has not been completed or paused
     while (isAlgorithmRunning()) {
@@ -22,7 +22,7 @@ export const runBFS = async (queue, startNode, endNode, grid, toggleVisitedNode,
         if (nodeEquals(endNode, currNode)) {
             await tracePath(endNode, grid, togglePathNode)
             completeAlgorithm()
-            break
+            return
         }
 
         const neighbors = getNeighbors(currNode)

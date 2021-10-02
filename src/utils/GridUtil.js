@@ -106,3 +106,16 @@ export const clearBoard = (grid) => {
     }
     return grid
 }
+
+export const clearPath = (grid) => {
+    grid = grid.slice()
+    for (let i = 0; i < grid.length; i++) {
+        for (let j = 0; j < grid[0].length; j++) {
+            const node = grid[i][j]
+            node.isPathNode = false
+            node.isVisitedNode = false
+            node.isFrontierNode = false
+        }
+    }
+    return grid
+}
