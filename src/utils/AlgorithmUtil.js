@@ -1,11 +1,7 @@
 import store from "../"
 
 export const isAlgorithmRunning = () => {
-    return store.getState().algorithmRunning
-}
-
-export const isAlgorithmCompleted = () => {
-    return store.getState().algorithmCompleted
+    return store.getState().algorithmStatus === 'RUNNING'
 }
 
 export const nodeEquals = (node_1, node_2) => {

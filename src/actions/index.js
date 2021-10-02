@@ -1,5 +1,4 @@
 // create and export types for our actions
-export const TOGGLE_ALGORITHM_RUNNING = "TOGGLE_ALGORITHM_RUNNING"
 export const SET_BFS_ALGORITHM = "SET_BFS_ALGORITHM"
 export const SET_DFS_ALGORITHM = "SET_DFS_ALGORITHM"
 export const SET_ASTAR_ALGORITHM = "SET_ASTAR_ALGORITHM"
@@ -10,11 +9,14 @@ export const TOGGLE_WALL_NODE = "TOGGLE_WALL_NODE"
 export const TOGGLE_START_NODE = "TOGGLE_START_NODE"
 export const TOGGLE_END_NODE = "TOGGLE_END_NODE"
 export const TOGGLE_PATH_NODE = "TOGGLE_PATH_NODE"
-export const TOGGLE_ALGORITHM_COMPLETED = "TOGGLE_ALGORITHM_COMPLETED"
 export const SET_ALGORITHM_STATE = "SET_ALGORITHM_STATE"
 export const CLEAR_ALGORITHM_STATE = "CLEAR_ALGORITHM_STATE"
 export const SET_START_NODE = "SET_START_NODE"
-export const SET_END_NODE = "SET_END_NODE" 
+export const SET_END_NODE = "SET_END_NODE"
+export const RUN_ALGORITHM = "RUN_ALGORITHM"
+export const READY_ALGORITHM = "READY_ALGORITHM"
+export const PAUSE_ALGORITHM = "PAUSE_ALGORITHM"
+export const COMPLETE_ALGORITHM = "COMPLETE_ALGORITHM" 
 
 // action creators for grid state
 export const toggleVisitedNode = (row, col) => {
@@ -60,17 +62,31 @@ export const togglePathNode = (row, col) => {
 }
 
 // action creators for algorithm state
-export const toggleAlgorithmRunning = () => {
+
+export const runAlgorithm = () => {
     return {
-        type: TOGGLE_ALGORITHM_RUNNING
+        type: RUN_ALGORITHM,
     }
 };
 
-export const toggleAlgorithmCompleted = () => {
+export const readyAlgorithm = () => {
     return {
-        type: TOGGLE_ALGORITHM_COMPLETED
+        type: READY_ALGORITHM,
     }
-}
+};
+
+export const pauseAlgorithm = () => {
+    return {
+        type: PAUSE_ALGORITHM,
+    }
+};
+
+export const completeAlgorithm = () => {
+    return {
+        type: COMPLETE_ALGORITHM,
+    }
+};
+
 
 export const setBFSAlgorithm = () => {
     return {

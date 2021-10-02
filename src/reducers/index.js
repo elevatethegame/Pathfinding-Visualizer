@@ -1,8 +1,9 @@
 import { combineReducers } from "redux"
 import { generateEmptyGrid, setEndNode, setFrontierNode, setPathNode, setStartNode, setVisitedNode, setWallNode } from "../utils/GridUtil"
-import { TOGGLE_ALGORITHM_RUNNING, SET_BFS_ALGORITHM, SET_ASTAR_ALGORITHM, SET_DFS_ALGORITHM, SET_GREEDY_ALGORITHM,
+import { SET_BFS_ALGORITHM, SET_ASTAR_ALGORITHM, SET_DFS_ALGORITHM, SET_GREEDY_ALGORITHM,
     TOGGLE_END_NODE, TOGGLE_FRONTIER_NODE, TOGGLE_PATH_NODE, TOGGLE_START_NODE, TOGGLE_VISITED_NODE, TOGGLE_WALL_NODE,
-    TOGGLE_ALGORITHM_COMPLETED, SET_ALGORITHM_STATE, CLEAR_ALGORITHM_STATE, SET_START_NODE, SET_END_NODE } from '../actions'
+    SET_ALGORITHM_STATE, CLEAR_ALGORITHM_STATE, SET_START_NODE, SET_END_NODE,
+    READY_ALGORITHM, COMPLETE_ALGORITHM, PAUSE_ALGORITHM, RUN_ALGORITHM } from '../actions'
 
 const numRows = 20  // Grid Dimensions
 const numCols = 50
@@ -46,19 +47,16 @@ function board(state = { grid: generateEmptyGrid(numRows, numCols, start, end) }
     }
 } 
 
-function algorithmRunning(state = false, action) {
+function algorithmStatus(state = 'UNSELECTED', action) {
     switch(action.type) {
-        case TOGGLE_ALGORITHM_RUNNING:
-            return !state;
-        default:
-            return state
-    }
-}
-
-function algorithmCompleted(state = false, action) {
-    switch(action.type) {
-        case TOGGLE_ALGORITHM_COMPLETED:
-            return !state;
+        case READY_ALGORITHM:
+            return 'READY';
+        case RUN_ALGORITHM:
+            return 'RUNNING';
+        case PAUSE_ALGORITHM:
+            return 'PAUSED';
+        case COMPLETE_ALGORITHM:
+            return 'COMPLETED';
         default:
             return state
     }
@@ -110,8 +108,7 @@ function endNode(state = end, action) {
 
 const reducer = combineReducers({
     board,
-    algorithmRunning,
-    algorithmCompleted,
+    algorithmStatus,
     algorithmSelected,
     algorithmState,
     startNode,

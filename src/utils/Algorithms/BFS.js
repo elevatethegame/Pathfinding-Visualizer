@@ -1,12 +1,13 @@
-import { isAlgorithmRunning, isAlgorithmCompleted, nodeEquals, shouldEnqueueNode, getNeighbors, 
+import { isAlgorithmRunning, nodeEquals, shouldEnqueueNode, getNeighbors, 
     sleep } from '../AlgorithmUtil'
 import buckets from 'buckets-js'
 
 export const runBFS = async (queue, startNode, endNode, grid, toggleVisitedNode, toggleFrontierNode,
-    toggleAlgorithmRunning) => {
-
+    completeAlgorithm) => {
+        
     // While the algorithm has not been completed or paused
-    while (isAlgorithmRunning() && !isAlgorithmCompleted()) {
+    while (isAlgorithmRunning()) {
+        
         // Create a new queue if the current algorithm state is empty; this is the first iteration
         if (!queue) {
             queue = buckets.Queue()
@@ -18,7 +19,7 @@ export const runBFS = async (queue, startNode, endNode, grid, toggleVisitedNode,
         toggleVisitedNode(currNode[0], currNode[1])
 
         if (nodeEquals(endNode, currNode)) {
-            toggleAlgorithmRunning()
+            completeAlgorithm()
             break
         }
 
@@ -34,5 +35,7 @@ export const runBFS = async (queue, startNode, endNode, grid, toggleVisitedNode,
         await sleep(5)
 
     }
+
+    return queue
 
 }
