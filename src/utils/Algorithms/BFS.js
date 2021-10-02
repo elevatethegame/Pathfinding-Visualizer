@@ -14,6 +14,11 @@ export const runBFS = async (queue, startNode, endNode, grid, toggleVisitedNode,
             queue.enqueue(startNode)
         }
 
+        if (queue.isEmpty()) {  // No path was found
+            completeAlgorithm()
+            return
+        }
+
         // Perform one iteration of BFS
         const currNode = queue.dequeue()
         toggleVisitedNode(currNode[0], currNode[1])
