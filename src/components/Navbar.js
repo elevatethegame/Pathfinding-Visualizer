@@ -2,10 +2,14 @@ import React from 'react'
 import '../css/Navbar.css'
 
 
-function Navbar({ algorithmStatus, algorithmSelected, runAlgorithm }) {
+function Navbar({ algorithmStatus, algorithmSelected, runAlgorithm, generateWalls }) {
 
     const handleClickRun = () => {
         runAlgorithm()
+    }
+
+    const handleClickGenerateWalls = () => {
+        generateWalls()
     }
 
     let runButtonText;
@@ -35,7 +39,7 @@ function Navbar({ algorithmStatus, algorithmSelected, runAlgorithm }) {
             <div className='navbar-list-container'>
                 <ul className='navbar-list'>
                     <li className='navbar-item'>
-                        <button className='navbar-button navbar-normal-button'>Generate Walls</button>
+                        <button className='navbar-button navbar-normal-button' onClick={handleClickGenerateWalls}>Generate Walls</button>
                     </li>
                     <li className='navbar-item'>
                         <button  className='navbar-button navbar-normal-button'>Select Algorithm</button>

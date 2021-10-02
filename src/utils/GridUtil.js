@@ -73,3 +73,19 @@ export const setParentNode = (grid, {row, col, parent}) => {
     grid[row][col].parent = parent;
     return grid
 }
+
+export const generateWalls = (grid) => {
+    const p = 0.3  // probability that a node becomes a wall node 
+    grid = grid.slice()
+    for (let i = 0; i < grid.length; i++) {
+        for (let j = 0; j < grid[0].length; j++) {
+            const node = grid[i][j]
+            if (!node.isStartNode && !node.isEndNode && Math.random() <= p) {
+                node.isWallNode = true
+            } else {
+                node.isWallNode = false
+            }
+        }
+    }
+    return grid
+}

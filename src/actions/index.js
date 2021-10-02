@@ -18,6 +18,7 @@ export const READY_ALGORITHM = "READY_ALGORITHM"
 export const PAUSE_ALGORITHM = "PAUSE_ALGORITHM"
 export const COMPLETE_ALGORITHM = "COMPLETE_ALGORITHM" 
 export const SET_PARENT_NODE = "SET_PARENT_NODE"
+export const GENERATE_WALLS = "GENERATE_WALLS"
 
 // action creators for grid state
 export const toggleVisitedNode = (row, col) => {
@@ -66,6 +67,12 @@ export const setParentNode = (row, col, parent) => {
     return {
         type: SET_PARENT_NODE,
         payload: {row, col, parent}
+    }
+}
+
+export const generateWalls = () => {
+    return {
+        type: GENERATE_WALLS
     }
 }
 
@@ -133,6 +140,7 @@ export const clearAlgorithmState = () => {
     }
 }
 
+// action creators for setting start and end nodes
 export const setStartNode = (row, col) => {
     return {
         type: SET_START_NODE,
