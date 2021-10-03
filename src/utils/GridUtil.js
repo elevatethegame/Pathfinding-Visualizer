@@ -1,5 +1,5 @@
 // Node constructor
-function Node() {
+export function Node() {
     this.isStartNode = false
     this.isEndNode = false
     this.isWallNode = false
@@ -7,6 +7,18 @@ function Node() {
     this.isVisitedNode = false
     this.isPathNode = false
     this.parent = null
+}
+
+export const initializeStartNode = () => {
+    const node = new Node()
+    node.isStartNode = true
+    return node
+}
+
+export const initializeEndNode = () => {
+    const node = new Node()
+    node.isEndNode = true
+    return node
 }
 
 function Statistic(numTotal) {
@@ -94,19 +106,25 @@ export const setPathNode = (grid, statistics, {row, col}) => {
 
 export const setStartNode = (grid, {row, col}) => {
     grid = grid.slice()
-    grid[row][col].isStartNode = !grid[row][col].isStartNode;
+    grid[row][col] = initializeStartNode()
     return grid
 }
 
 export const setEndNode = (grid, {row, col}) => {
     grid = grid.slice()
-    grid[row][col].isEndNode = !grid[row][col].isEndNode;
+    grid[row][col] = initializeEndNode()
     return grid
 }
 
 export const setParentNode = (grid, {row, col, parent}) => {
     grid = grid.slice()
     grid[row][col].parent = parent;
+    return grid
+}
+
+export const applyMaskedNode = (grid, {row, col}, maskedNode) => {
+    grid = grid.slice()
+    grid[row][col] = maskedNode;
     return grid
 }
 

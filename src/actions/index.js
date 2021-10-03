@@ -6,8 +6,6 @@ export const SET_GREEDY_ALGORITHM = "SET_GREEDY_ALGORITHM"
 export const TOGGLE_VISITED_NODE = "TOGGLE_VISITED_NODE"
 export const TOGGLE_FRONTIER_NODE = "TOGGLE_FRONTIER_NODE"
 export const TOGGLE_WALL_NODE = "TOGGLE_WALL_NODE"
-export const TOGGLE_START_NODE = "TOGGLE_START_NODE"
-export const TOGGLE_END_NODE = "TOGGLE_END_NODE"
 export const TOGGLE_PATH_NODE = "TOGGLE_PATH_NODE"
 export const SET_ALGORITHM_STATE = "SET_ALGORITHM_STATE"
 export const CLEAR_ALGORITHM_STATE = "CLEAR_ALGORITHM_STATE"
@@ -23,6 +21,8 @@ export const CLEAR_BOARD = "CLEAR_BOARD"
 export const CLEAR_PATH = "CLEAR_PATH"
 export const SET_DRAGGED_NODE = "SET_DRAGGED_NODE"
 export const CLEAR_DRAGGED_NODE = "CLEAR_DRAGGED_NODE"
+export const SET_MASKED_NODE = "SET_MASKED_NODE"
+export const APPLY_MASKED_NODE = "APPLY_MASKED_NODE"
 
 // action creators for grid state
 export const toggleVisitedNode = (row, col) => {
@@ -42,20 +42,6 @@ export const toggleFrontierNode = (row, col) => {
 export const toggleWallNode = (row, col) => {
     return {
         type: TOGGLE_WALL_NODE,
-        payload: {row, col}
-    }
-}
-
-export const toggleStartNode = (row, col) => {
-    return {
-        type: TOGGLE_START_NODE,
-        payload: {row, col}
-    }
-}
-
-export const toggleEndNode = (row, col) => {
-    return {
-        type: TOGGLE_END_NODE,
         payload: {row, col}
     }
 }
@@ -181,6 +167,20 @@ export const setDraggedNode = (row, col) => {
 export const clearDraggedNode = (row, col) => {
     return {
         type: CLEAR_DRAGGED_NODE,
+        payload: {row, col}
+    }
+}
+
+export const setMaskedNode = (row, col) => {
+    return {
+        type: SET_MASKED_NODE,
+        payload: {row, col}
+    }
+}
+
+export const applyMaskedNode = (row, col) => {
+    return {
+        type: APPLY_MASKED_NODE,
         payload: {row, col}
     }
 }

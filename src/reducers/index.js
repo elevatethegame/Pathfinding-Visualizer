@@ -1,11 +1,11 @@
 import { combineReducers } from "redux"
 import { generateEmptyGrid, setEndNode, setFrontierNode, setPathNode, setStartNode, setVisitedNode, setWallNode,
-    setParentNode, generateWalls, clearBoard, clearPath, initializeStatistics,  } from "../utils/GridUtil"
+    setParentNode, generateWalls, clearBoard, clearPath, initializeStatistics, Node, applyMaskedNode } from "../utils/GridUtil"
 import { SET_BFS_ALGORITHM, SET_ASTAR_ALGORITHM, SET_DFS_ALGORITHM, SET_GREEDY_ALGORITHM,
-    TOGGLE_END_NODE, TOGGLE_FRONTIER_NODE, TOGGLE_PATH_NODE, TOGGLE_START_NODE, TOGGLE_VISITED_NODE, TOGGLE_WALL_NODE,
+    TOGGLE_FRONTIER_NODE, TOGGLE_PATH_NODE, TOGGLE_VISITED_NODE, TOGGLE_WALL_NODE,
     SET_ALGORITHM_STATE, CLEAR_ALGORITHM_STATE, SET_START_NODE, SET_END_NODE, READY_ALGORITHM, COMPLETE_ALGORITHM,
     PAUSE_ALGORITHM, RUN_ALGORITHM, SET_PARENT_NODE, GENERATE_WALLS, CLEAR_BOARD, CLEAR_PATH, SET_DRAGGED_NODE, 
-    CLEAR_DRAGGED_NODE } from '../actions'
+    CLEAR_DRAGGED_NODE, SET_MASKED_NODE, APPLY_MASKED_NODE } from '../actions'
 
 const numRows = 20  // Grid Dimensions
 const numCols = 50
@@ -13,7 +13,7 @@ const start = [9, 15]  // Start Node
 const end = [9, 35]  // End Node
 
 function board(state = { grid: generateEmptyGrid(numRows, numCols, start, end), statistics: initializeStatistics(numRows, numCols), 
-        draggedNode: null }, action) {
+        draggedNode: null, maskedNode: new Node(), startNode: start, endNode: end }, action) {
     switch(action.type) {
         case TOGGLE_VISITED_NODE: {
             const { grid, statistics } = setVisitedNode(state.grid, state.statistics, action.payload)
@@ -47,15 +47,17 @@ function board(state = { grid: generateEmptyGrid(numRows, numCols, start, end), 
                 statistics
             }
         }
-        case TOGGLE_START_NODE:
+        case SET_START_NODE:
             return {
                 ...state,
-                grid: setStartNode(state.grid, action.payload)
+                grid: setStartNode(state.grid, action.payload),
+                startNode: [action.payload.row, action.payload.col]
             }
-        case TOGGLE_END_NODE:
+        case SET_END_NODE:
             return {
                 ...state,
-                grid: setEndNode(state.grid, action.payload)
+                grid: setEndNode(state.grid, action.payload),
+                endNode: [action.payload.row, action.payload.col]
             }
         case SET_PARENT_NODE:
             return {
@@ -86,20 +88,30 @@ function board(state = { grid: generateEmptyGrid(numRows, numCols, start, end), 
                 statistics
             }
         }
-        case SET_DRAGGED_NODE: {
+        case SET_DRAGGED_NODE:
             return {
                 ...state,
                 draggedNode: {
                     ...state.grid[action.payload.row][action.payload.col]
                 }
             }
-        }
-        case CLEAR_DRAGGED_NODE: {
+        case CLEAR_DRAGGED_NODE:
             return {
                 ...state,
                 draggedNode: null
             }
-        }
+        case SET_MASKED_NODE: 
+            return {
+                ...state,
+                maskedNode: {
+                    ...state.grid[action.payload.row][action.payload.col]
+                }
+            }
+        case APPLY_MASKED_NODE: 
+            return {
+                ...state,
+                grid: applyMaskedNode(state.grid, action.payload, state.maskedNode)
+            }
         default:
             return state
     }
@@ -146,31 +158,11 @@ function algorithmState(state = null, action) {
     }
 }
 
-function startNode(state = start, action) {  
-    switch(action.type) {
-        case SET_START_NODE:
-            return [action.payload.row, action.payload.col];
-        default:
-            return state
-    }
-}
-
-function endNode(state = end, action) {  
-    switch(action.type) {
-        case SET_END_NODE:
-            return [action.payload.row, action.payload.col];
-        default:
-            return state
-    }
-}
-
 const reducer = combineReducers({
     board,
     algorithmStatus,
     algorithmSelected,
-    algorithmState,
-    startNode,
-    endNode,
+    algorithmState
 })
 
 export default reducer
