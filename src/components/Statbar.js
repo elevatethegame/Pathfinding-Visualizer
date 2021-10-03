@@ -23,7 +23,7 @@ function Statbar({ statistics }) {
                     <span className='stat-description'>Unvisited</span>
                 </div>
                 <div>
-                    <span className='stat-value'>{statistics.numTotal - statistics.numVisited}</span>
+                    <span className='stat-value'>{statistics.numTotal - statistics.numVisited - statistics.numWall}</span>
                 </div>
             </div>
             <div className='stat-container'>
