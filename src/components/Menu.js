@@ -30,9 +30,9 @@ function Menu(props) {
                 break
             case 'DFS':
                 break
-            case 'A Star':
+            case 'ASTAR':
                 break
-            case 'Greedy':
+            case 'GREEDY':
                 break
             default:
                 break
@@ -93,6 +93,7 @@ const mapStateToProps = (state) => {
         endNode: state.endNode,
         algorithmState: state.algorithmState,
         algorithmStatus: state.algorithmStatus,
+        statistics: state.board.statistics,
     }
 }
 

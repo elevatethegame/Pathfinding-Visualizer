@@ -1,7 +1,8 @@
 import React from 'react'
+import { connect } from 'react-redux'
 import '../css/Statbar.css'
 
-function Statbar() {
+function Statbar({ statistics }) {
     return (
         <div className='statbar'>
             <div className='stat-container'>
@@ -22,7 +23,7 @@ function Statbar() {
                     <span className='stat-description'>Unvisited</span>
                 </div>
                 <div>
-                    <span className='stat-value'>170</span>
+                    <span className='stat-value'>{statistics.numTotal - statistics.numVisited}</span>
                 </div>
             </div>
             <div className='stat-container'>
@@ -31,7 +32,7 @@ function Statbar() {
                     <span className='stat-description'>Visited</span>
                 </div>
                 <div>
-                    <span className='stat-value'>170</span>
+                    <span className='stat-value'>{statistics.numVisited}</span>
                 </div>
             </div>
             <div className='stat-container'>
@@ -40,7 +41,7 @@ function Statbar() {
                     <span className='stat-description'>Frontier</span>
                 </div>
                 <div>
-                    <span className='stat-value'>170</span>
+                    <span className='stat-value'>{statistics.numFrontier}</span>
                 </div>
             </div>
             <div className='stat-container'>
@@ -49,7 +50,7 @@ function Statbar() {
                     <span className='stat-description'>Wall</span>
                 </div>
                 <div>
-                    <span className='stat-value'>170</span>
+                    <span className='stat-value'>{statistics.numWall}</span>
                 </div>
             </div>
             <div className='stat-container'>
@@ -58,11 +59,17 @@ function Statbar() {
                     <span className='stat-description'>Path</span>
                 </div>
                 <div>
-                    <span className='stat-value'>170</span>
+                    <span className='stat-value'>{statistics.numPath}</span>
                 </div>
             </div>
         </div>
     )
 }
 
-export default Statbar
+const mapStateToProps = (state) => {
+    return {
+        statistics: state.board.statistics,
+    }
+}
+
+export default connect(mapStateToProps)(Statbar)

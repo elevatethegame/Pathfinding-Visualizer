@@ -9,6 +9,14 @@ function Node() {
     this.parent = null
 }
 
+function Statistic(numTotal) {
+    this.numTotal = numTotal
+    this.numVisited = 0
+    this.numFrontier = 0
+    this.numWall = 0
+    this.numPath = 0
+}
+
 // Key generators for React Grid mapping to rows and cells
 export const generateRowKey = (row) => {
     return row.toString()
@@ -32,22 +40,56 @@ export const generateEmptyGrid = (numRows, numCols, startNode, endNode) => {
     return grid
 }
 
-export const setVisitedNode = (grid, {row, col}) => {
+export const setVisitedNode = (grid, statistics, {row, col}) => {
     grid = grid.slice()
-    grid[row][col].isVisitedNode = !grid[row][col].isVisitedNode;
-    return grid
+    const node = grid[row][col]
+    node.isVisitedNode = !node.isVisitedNode;
+    return {
+        grid,
+        statistics: {
+            ...statistics,
+            numVisited: node.isVisitedNode ? statistics.numVisited + 1 : statistics.numVisited - 1
+        }
+    }
 }
 
-export const setWallNode = (grid, {row, col}) => {
+export const setWallNode = (grid, statistics, {row, col}) => {
     grid = grid.slice()
-    grid[row][col].isWallNode = !grid[row][col].isWallNode;
-    return grid
+    const node = grid[row][col]
+    node.isWallNode = !node.isWallNode;
+    return {
+        grid,
+        statistics: {
+            ...statistics,
+            numWall: node.isWallNode ? statistics.numWall + 1 : statistics.numWall - 1
+        }
+    }
 }
 
-export const setFrontierNode = (grid, {row, col}) => {
+export const setFrontierNode = (grid, statistics, {row, col}) => {
     grid = grid.slice()
-    grid[row][col].isFrontierNode = !grid[row][col].isFrontierNode;
-    return grid
+    const node = grid[row][col]
+    node.isFrontierNode = !node.isFrontierNode;
+    return {
+        grid,
+        statistics: {
+            ...statistics,
+            numFrontier: node.isFrontierNode ? statistics.numFrontier + 1 : statistics.numFrontier - 1
+        }
+    }
+}
+
+export const setPathNode = (grid, statistics, {row, col}) => {
+    grid = grid.slice()
+    const node = grid[row][col]
+    node.isPathNode = !node.isPathNode;
+    return {
+        grid,
+        statistics: {
+            ...statistics,
+            numPath: node.isPathNode ? statistics.numPath + 1 : statistics.numPath - 1
+        }
+    }
 }
 
 export const setStartNode = (grid, {row, col}) => {
@@ -62,35 +104,37 @@ export const setEndNode = (grid, {row, col}) => {
     return grid
 }
 
-export const setPathNode = (grid, {row, col}) => {
-    grid = grid.slice()
-    grid[row][col].isPathNode = !grid[row][col].isPathNode;
-    return grid
-}
-
 export const setParentNode = (grid, {row, col, parent}) => {
     grid = grid.slice()
     grid[row][col].parent = parent;
     return grid
 }
 
-export const generateWalls = (grid) => {
-    const p = 0.3  // probability that a node becomes a wall node 
+export const generateWalls = (grid, statistics) => {
     grid = grid.slice()
+    const p = 0.3  // probability that a node becomes a wall node 
+    let numWall = 0
     for (let i = 0; i < grid.length; i++) {
         for (let j = 0; j < grid[0].length; j++) {
             const node = grid[i][j]
             if (!node.isStartNode && !node.isEndNode && Math.random() <= p) {
                 node.isWallNode = true
+                numWall++
             } else {
                 node.isWallNode = false
             }
         }
     }
-    return grid
+    return { 
+        grid, 
+        statistics: {
+            ...statistics,
+            numWall
+        }
+    }
 }
 
-export const clearBoard = (grid) => {
+export const clearBoard = (grid, statistics) => {
     grid = grid.slice()
     for (let i = 0; i < grid.length; i++) {
         for (let j = 0; j < grid[0].length; j++) {
@@ -104,10 +148,13 @@ export const clearBoard = (grid) => {
             }
         }
     }
-    return grid
+    return { 
+        grid, 
+        statistics: initializeStatistics(grid.length, grid[0].length)
+    }
 }
 
-export const clearPath = (grid) => {
+export const clearPath = (grid, statistics) => {
     grid = grid.slice()
     for (let i = 0; i < grid.length; i++) {
         for (let j = 0; j < grid[0].length; j++) {
@@ -117,5 +164,18 @@ export const clearPath = (grid) => {
             node.isFrontierNode = false
         }
     }
-    return grid
+    return { 
+        grid, 
+        statistics: {
+            ...statistics,
+            numPath: 0,
+            numFrontier: 0,
+            numVisited: 0
+        }
+    }
+}
+
+// Utilities for generating statistics
+export const initializeStatistics = (numRows, numCols) => {
+    return new Statistic(numRows * numCols)
 }

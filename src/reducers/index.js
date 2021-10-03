@@ -1,6 +1,6 @@
 import { combineReducers } from "redux"
 import { generateEmptyGrid, setEndNode, setFrontierNode, setPathNode, setStartNode, setVisitedNode, setWallNode,
-    setParentNode, generateWalls, clearBoard, clearPath } from "../utils/GridUtil"
+    setParentNode, generateWalls, clearBoard, clearPath, initializeStatistics,  } from "../utils/GridUtil"
 import { SET_BFS_ALGORITHM, SET_ASTAR_ALGORITHM, SET_DFS_ALGORITHM, SET_GREEDY_ALGORITHM,
     TOGGLE_END_NODE, TOGGLE_FRONTIER_NODE, TOGGLE_PATH_NODE, TOGGLE_START_NODE, TOGGLE_VISITED_NODE, TOGGLE_WALL_NODE,
     SET_ALGORITHM_STATE, CLEAR_ALGORITHM_STATE, SET_START_NODE, SET_END_NODE, READY_ALGORITHM, COMPLETE_ALGORITHM,
@@ -11,23 +11,36 @@ const numCols = 50
 const start = [9, 15]  // Start Node
 const end = [9, 35]  // End Node
 
-function board(state = { grid: generateEmptyGrid(numRows, numCols, start, end) }, action) {
+function board(state = { grid: generateEmptyGrid(numRows, numCols, start, end), statistics: initializeStatistics(numRows, numCols) }, action) {
     switch(action.type) {
-        case TOGGLE_VISITED_NODE:
+        case TOGGLE_VISITED_NODE: {
+            const { grid, statistics } = setVisitedNode(state.grid, state.statistics, action.payload)
             return {
-                ...state,
-                grid: setVisitedNode(state.grid, action.payload)
+                grid,
+                statistics
             }
-        case TOGGLE_WALL_NODE:
+        }
+        case TOGGLE_WALL_NODE: {
+            const { grid, statistics } = setWallNode(state.grid, state.statistics, action.payload)
             return {
-                ...state,
-                grid: setWallNode(state.grid, action.payload)
+                grid,
+                statistics
             }
-        case TOGGLE_FRONTIER_NODE:
+        }
+        case TOGGLE_FRONTIER_NODE: {
+            const { grid, statistics } = setFrontierNode(state.grid, state.statistics, action.payload)
             return {
-                ...state,
-                grid: setFrontierNode(state.grid, action.payload)
+                grid,
+                statistics
             }
+        }
+        case TOGGLE_PATH_NODE: {
+            const { grid, statistics } = setPathNode(state.grid, state.statistics, action.payload)
+            return {
+                grid,
+                statistics
+            }
+        }
         case TOGGLE_START_NODE:
             return {
                 ...state,
@@ -38,31 +51,32 @@ function board(state = { grid: generateEmptyGrid(numRows, numCols, start, end) }
                 ...state,
                 grid: setEndNode(state.grid, action.payload)
             }
-        case TOGGLE_PATH_NODE:
-            return {
-                ...state,
-                grid: setPathNode(state.grid, action.payload)
-            }
         case SET_PARENT_NODE:
             return {
                 ...state,
                 grid: setParentNode(state.grid, action.payload)
             }
-        case GENERATE_WALLS:
+        case GENERATE_WALLS: {
+            const { grid, statistics } = generateWalls(state.grid, state.statistics)
             return {
-                ...state,
-                grid: generateWalls(state.grid)
+                grid,
+                statistics
             }
-        case CLEAR_BOARD:
+        }
+        case CLEAR_BOARD: {
+            const { grid, statistics } = clearBoard(state.grid, state.statistics)
             return {
-                ...state,
-                grid: clearBoard(state.grid)
+                grid,
+                statistics
             }
-        case CLEAR_PATH:
+        }
+        case CLEAR_PATH: {
+            const { grid, statistics } = clearPath(state.grid, state.statistics)
             return {
-                ...start,
-                grid: clearPath(state.grid)
+                grid,
+                statistics
             }
+        }
         default:
             return state
     }
@@ -88,11 +102,11 @@ function algorithmSelected(state = 'BFS', action) {  // we set initial to BFS fo
         case SET_BFS_ALGORITHM:
             return 'BFS';
         case SET_ASTAR_ALGORITHM:
-            return 'A Star';
+            return 'ASTAR';
         case SET_DFS_ALGORITHM:
             return 'DFS';
         case SET_GREEDY_ALGORITHM:
-            return 'Greedy';
+            return 'GREEDY';
         default:
             return state
     }
