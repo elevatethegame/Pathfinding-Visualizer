@@ -1,8 +1,28 @@
 import React from 'react'
 import '../css/Node.css'
 import { connect } from 'react-redux'
+import { toggleWallNode } from '../actions'
+import { nodeEquals } from '../utils/AlgorithmUtil'
 
-function Node({isVisitedNode, isWallNode, isEndNode, isStartNode, isFrontierNode, isPathNode}) {
+function Node({isVisitedNode, isWallNode, isEndNode, isStartNode, isFrontierNode, isPathNode,
+    toggleWallNode, row, col, startNode, endNode }) {
+
+    const handleMouseOver = () => {
+        
+    }
+
+    const handleMouseOut = () => {
+        
+    }
+
+    const handleMouseDown = () => {
+        if (!nodeEquals([row, col], startNode) && !nodeEquals([row, col], endNode))
+            toggleWallNode(row, col)
+    }
+
+    const handleMouseUp = () => {
+        
+    }
 
     let nodeClass
     if (isStartNode) {
@@ -22,7 +42,8 @@ function Node({isVisitedNode, isWallNode, isEndNode, isStartNode, isFrontierNode
     }
 
     return (
-        <div className={`node ${nodeClass}`}>
+        <div className={`node ${nodeClass}`} onMouseOut={handleMouseOut} onMouseOver={handleMouseOver}
+            onMouseUp={handleMouseUp} onMouseDown={handleMouseDown} >
             
         </div>
     )
@@ -36,7 +57,15 @@ const mapStateToProps = (state, ownProps) => {
         isEndNode: state.board.grid[ownProps.row][ownProps.col].isEndNode,
         isPathNode: state.board.grid[ownProps.row][ownProps.col].isPathNode,
         isFrontierNode: state.board.grid[ownProps.row][ownProps.col].isFrontierNode,
+        startNode: state.startNode,
+        endNode: state.endNode,
     }
 }
 
-export default connect(mapStateToProps)(Node)
+const mapDispatchToProps = (dispatch) => {
+    return {
+        toggleWallNode: (row, col) => dispatch(toggleWallNode(row, col)),
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Node)
