@@ -40,7 +40,7 @@ export const runBFS = async (queue, startNode, endNode, grid, toggleVisitedNode,
         }
 
         // Timeout ensures that the animation has enough time to render fully
-        await sleep(5)
+        await sleep(0)
 
     }
 

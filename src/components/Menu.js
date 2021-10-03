@@ -9,7 +9,7 @@ import { setBFSAlgorithm, toggleVisitedNode, toggleFrontierNode, setStartNode, s
     togglePathNode, setParentNode, generateWalls, clearBoard, clearPath, clearAlgorithmState } from '../actions'
 import { connect } from 'react-redux'
 import { runBFS } from '../utils/Algorithms/BFS'
-import { isAlgorithmRunning, isAlgorithmCompleted } from '../utils/AlgorithmUtil'
+import { isAlgorithmRunning, isAlgorithmCompleted, isAlgorithmReady } from '../utils/AlgorithmUtil'
 
 function Menu(props) {
 
@@ -38,7 +38,9 @@ function Menu(props) {
                 break
         }
 
-        if (isAlgorithmCompleted()) {
+        // We have to clear the algorithm state if it is completed or sent back to the ready state from the running state
+        // this happens when we click clearBoard or clearPath buttons while the algorithm is still running
+        if (isAlgorithmCompleted() || isAlgorithmReady()) {
             props.clearAlgorithmState()
         } else {
             props.setAlgorithmState(state)
@@ -54,7 +56,8 @@ function Menu(props) {
                 generateWalls={props.generateWalls}
                 clearBoard={props.clearBoard}
                 clearPath={props.clearPath}
-                readyAlgorithm={props.readyAlgorithm} />
+                readyAlgorithm={props.readyAlgorithm}
+                clearAlgorithmState={props.clearAlgorithmState} />
             <div className='grid-container'>
                 <Grid />
             </div>

@@ -3,7 +3,7 @@ import '../css/Navbar.css'
 
 
 function Navbar({ algorithmStatus, algorithmSelected, runAlgorithm, generateWalls, clearBoard, clearPath,
-    readyAlgorithm }) {
+    readyAlgorithm, clearAlgorithmState }) {
 
     const handleClickRun = () => {
         runAlgorithm()
@@ -15,11 +15,14 @@ function Navbar({ algorithmStatus, algorithmSelected, runAlgorithm, generateWall
 
     const handleClickClearPath = () => {
         clearPath()
+        // discard the state saved by any algorithm pauses
+        clearAlgorithmState()
         readyAlgorithm()
     }
 
     const handleClickClearBoard = () => {
         clearBoard()
+        clearAlgorithmState()
         readyAlgorithm()
     }
 
