@@ -4,18 +4,21 @@ import { generateEmptyGrid, setEndNode, setFrontierNode, setPathNode, setStartNo
 import { SET_BFS_ALGORITHM, SET_ASTAR_ALGORITHM, SET_DFS_ALGORITHM, SET_GREEDY_ALGORITHM,
     TOGGLE_END_NODE, TOGGLE_FRONTIER_NODE, TOGGLE_PATH_NODE, TOGGLE_START_NODE, TOGGLE_VISITED_NODE, TOGGLE_WALL_NODE,
     SET_ALGORITHM_STATE, CLEAR_ALGORITHM_STATE, SET_START_NODE, SET_END_NODE, READY_ALGORITHM, COMPLETE_ALGORITHM,
-    PAUSE_ALGORITHM, RUN_ALGORITHM, SET_PARENT_NODE, GENERATE_WALLS, CLEAR_BOARD, CLEAR_PATH } from '../actions'
+    PAUSE_ALGORITHM, RUN_ALGORITHM, SET_PARENT_NODE, GENERATE_WALLS, CLEAR_BOARD, CLEAR_PATH, SET_DRAGGED_NODE, 
+    CLEAR_DRAGGED_NODE } from '../actions'
 
 const numRows = 20  // Grid Dimensions
 const numCols = 50
 const start = [9, 15]  // Start Node
 const end = [9, 35]  // End Node
 
-function board(state = { grid: generateEmptyGrid(numRows, numCols, start, end), statistics: initializeStatistics(numRows, numCols) }, action) {
+function board(state = { grid: generateEmptyGrid(numRows, numCols, start, end), statistics: initializeStatistics(numRows, numCols), 
+        draggedNode: null }, action) {
     switch(action.type) {
         case TOGGLE_VISITED_NODE: {
             const { grid, statistics } = setVisitedNode(state.grid, state.statistics, action.payload)
             return {
+                ...state,
                 grid,
                 statistics
             }
@@ -23,6 +26,7 @@ function board(state = { grid: generateEmptyGrid(numRows, numCols, start, end), 
         case TOGGLE_WALL_NODE: {
             const { grid, statistics } = setWallNode(state.grid, state.statistics, action.payload)
             return {
+                ...state,
                 grid,
                 statistics
             }
@@ -30,6 +34,7 @@ function board(state = { grid: generateEmptyGrid(numRows, numCols, start, end), 
         case TOGGLE_FRONTIER_NODE: {
             const { grid, statistics } = setFrontierNode(state.grid, state.statistics, action.payload)
             return {
+                ...state,
                 grid,
                 statistics
             }
@@ -37,6 +42,7 @@ function board(state = { grid: generateEmptyGrid(numRows, numCols, start, end), 
         case TOGGLE_PATH_NODE: {
             const { grid, statistics } = setPathNode(state.grid, state.statistics, action.payload)
             return {
+                ...state,
                 grid,
                 statistics
             }
@@ -59,6 +65,7 @@ function board(state = { grid: generateEmptyGrid(numRows, numCols, start, end), 
         case GENERATE_WALLS: {
             const { grid, statistics } = generateWalls(state.grid, state.statistics)
             return {
+                ...state,
                 grid,
                 statistics
             }
@@ -66,6 +73,7 @@ function board(state = { grid: generateEmptyGrid(numRows, numCols, start, end), 
         case CLEAR_BOARD: {
             const { grid, statistics } = clearBoard(state.grid, state.statistics)
             return {
+                ...state,
                 grid,
                 statistics
             }
@@ -73,8 +81,23 @@ function board(state = { grid: generateEmptyGrid(numRows, numCols, start, end), 
         case CLEAR_PATH: {
             const { grid, statistics } = clearPath(state.grid, state.statistics)
             return {
+                ...state,
                 grid,
                 statistics
+            }
+        }
+        case SET_DRAGGED_NODE: {
+            return {
+                ...state,
+                draggedNode: {
+                    ...state.grid[action.payload.row][action.payload.col]
+                }
+            }
+        }
+        case CLEAR_DRAGGED_NODE: {
+            return {
+                ...state,
+                draggedNode: null
             }
         }
         default:
@@ -126,7 +149,7 @@ function algorithmState(state = null, action) {
 function startNode(state = start, action) {  
     switch(action.type) {
         case SET_START_NODE:
-            return [action.row, action.col];
+            return [action.payload.row, action.payload.col];
         default:
             return state
     }
@@ -135,7 +158,7 @@ function startNode(state = start, action) {
 function endNode(state = end, action) {  
     switch(action.type) {
         case SET_END_NODE:
-            return [action.row, action.col];
+            return [action.payload.row, action.payload.col];
         default:
             return state
     }
@@ -147,7 +170,7 @@ const reducer = combineReducers({
     algorithmSelected,
     algorithmState,
     startNode,
-    endNode
+    endNode,
 })
 
 export default reducer

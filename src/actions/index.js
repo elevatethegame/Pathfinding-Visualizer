@@ -21,6 +21,8 @@ export const SET_PARENT_NODE = "SET_PARENT_NODE"
 export const GENERATE_WALLS = "GENERATE_WALLS"
 export const CLEAR_BOARD = "CLEAR_BOARD"
 export const CLEAR_PATH = "CLEAR_PATH"
+export const SET_DRAGGED_NODE = "SET_DRAGGED_NODE"
+export const CLEAR_DRAGGED_NODE = "CLEAR_DRAGGED_NODE"
 
 // action creators for grid state
 export const toggleVisitedNode = (row, col) => {
@@ -154,7 +156,7 @@ export const clearAlgorithmState = () => {
     }
 }
 
-// action creators for setting start and end nodes
+// action creators for tracking nodes
 export const setStartNode = (row, col) => {
     return {
         type: SET_START_NODE,
@@ -165,6 +167,20 @@ export const setStartNode = (row, col) => {
 export const setEndNode = (row, col) => {
     return {
         type: SET_END_NODE,
+        payload: {row, col}
+    }
+}
+
+export const setDraggedNode = (row, col) => {
+    return {
+        type: SET_DRAGGED_NODE,
+        payload: {row, col}
+    }
+}
+
+export const clearDraggedNode = (row, col) => {
+    return {
+        type: CLEAR_DRAGGED_NODE,
         payload: {row, col}
     }
 }
