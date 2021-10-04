@@ -3,7 +3,7 @@ import '../css/Node.css'
 import { connect } from 'react-redux'
 import { toggleWallNode, setDraggedNode, clearDraggedNode, setStartNode, setEndNode, setMaskedNode, applyMaskedNode, 
     toggleVisitedNode, toggleFrontierNode, togglePathNode, setParentNode, rerunAlgorithm, clearPath } from '../actions'
-import { nodeEquals, isAlgorithmCompleted } from '../utils/AlgorithmUtil'
+import { nodeEquals, isAlgorithmCompleted, isAlgorithmRunning } from '../utils/AlgorithmUtil'
 import { rerunBFS } from '../utils/Algorithms/BFS'
 
 function Node({isVisitedNode, isWallNode, isEndNode, isStartNode, isFrontierNode, isPathNode,
@@ -40,9 +40,11 @@ function Node({isVisitedNode, isWallNode, isEndNode, isStartNode, isFrontierNode
     }
 
     const handleMouseDown = () => {
-        if (!nodeEquals([row, col], startNode) && !nodeEquals([row, col], endNode))
-            toggleWallNode(row, col)
-        setDraggedNode(row, col)  // this is the current node being dragged
+        if (!isAlgorithmRunning()) {  // only allow interactions with the grid when not running
+            if (!nodeEquals([row, col], startNode) && !nodeEquals([row, col], endNode))
+                toggleWallNode(row, col)
+            setDraggedNode(row, col)  // this is the current node being dragged
+        }
     }
 
     const handleMouseUp = () => {
