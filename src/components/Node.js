@@ -13,7 +13,7 @@ function Node({isVisitedNode, isWallNode, isEndNode, isStartNode, isFrontierNode
     const handleMouseOver = () => {
         if (draggedNode) {  // if there was a node being dragged to this position
             if (draggedNode.isWallNode && !isVisitedNode && !isFrontierNode && !isWallNode && !isStartNode && !isEndNode) {
-                toggleWallNode(row, col)
+                toggleWallNode(row, col)  // only allow toggling of wall boolean for unvisited/grey nodes and wall nodes
             } else if (draggedNode.isStartNode && !isEndNode) {  // do not allow dragging start node over end node
                 applyStartMaskedNode(draggedNode.row, draggedNode.col)  // restore masked node properties back to the node we came from
                 // do not save visited, frontier or path node states
@@ -46,7 +46,7 @@ function Node({isVisitedNode, isWallNode, isEndNode, isStartNode, isFrontierNode
 
     const handleMouseDown = () => {
         if (!isAlgorithmRunning()) {  // only allow interactions with the grid when not running
-            if (!nodeEquals([row, col], startNode) && !nodeEquals([row, col], endNode))
+            if (!nodeEquals([row, col], startNode) && !nodeEquals([row, col], endNode) && !isVisitedNode && !isFrontierNode && !isPathNode)
                 toggleWallNode(row, col)
             setDraggedNode(row, col)  // this is the current node being dragged
         }
