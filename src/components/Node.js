@@ -13,18 +13,13 @@ function Node({isVisitedNode, isWallNode, isEndNode, isStartNode, isFrontierNode
             if (draggedNode.isWallNode && !isVisitedNode && !isFrontierNode && !isWallNode && !isStartNode && !isEndNode) {
                 toggleWallNode(row, col)
             } else if (draggedNode.isStartNode) {
+                applyMaskedNode(draggedNode.row, draggedNode.col)  // restore masked node properties back to the node we came from
                 setMaskedNode(row, col)  // save the state of the node, to be reapplied to this node if we drag to somewhere else
                 setStartNode(row, col)
+                setDraggedNode(row, col)  // update the dragged node to be this node
             } else if (draggedNode.isEndNode) {
                 
             }
-        }
-    }
-
-    const handleMouseOut = () => {
-        if (draggedNode && (draggedNode.isStartNode || draggedNode.isEndNode) ) {
-            // Reapply state of this node that was saved after moving out of this node
-            applyMaskedNode(row, col)
         }
     }
 
@@ -56,7 +51,7 @@ function Node({isVisitedNode, isWallNode, isEndNode, isStartNode, isFrontierNode
     }
 
     return (
-        <div className={`node ${nodeClass} unselectable`} onMouseOut={handleMouseOut} onMouseOver={handleMouseOver}
+        <div className={`node ${nodeClass} unselectable`} onMouseOver={handleMouseOver}
             onMouseUp={handleMouseUp} onMouseDown={handleMouseDown} >
             
         </div>

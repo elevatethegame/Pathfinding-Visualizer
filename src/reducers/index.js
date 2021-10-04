@@ -92,7 +92,9 @@ function board(state = { grid: generateEmptyGrid(numRows, numCols, start, end), 
             return {
                 ...state,
                 draggedNode: {
-                    ...state.grid[action.payload.row][action.payload.col]
+                    ...state.grid[action.payload.row][action.payload.col],
+                    row: action.payload.row,
+                    col: action.payload.col,
                 }
             }
         case CLEAR_DRAGGED_NODE:
