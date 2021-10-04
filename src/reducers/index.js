@@ -1,11 +1,11 @@
 import { combineReducers } from "redux"
 import { generateEmptyGrid, setEndNode, setFrontierNode, setPathNode, setStartNode, setVisitedNode, setWallNode,
-    setParentNode, generateWalls, clearBoard, clearPath, initializeStatistics, Node, applyMaskedNode } from "../utils/GridUtil"
+    setParentNode, generateWalls, clearBoard, clearPath, initializeStatistics, Node, applyMaskedNode, generateRerunAlgorithmGrid } from "../utils/GridUtil"
 import { SET_BFS_ALGORITHM, SET_ASTAR_ALGORITHM, SET_DFS_ALGORITHM, SET_GREEDY_ALGORITHM,
     TOGGLE_FRONTIER_NODE, TOGGLE_PATH_NODE, TOGGLE_VISITED_NODE, TOGGLE_WALL_NODE,
     SET_ALGORITHM_STATE, CLEAR_ALGORITHM_STATE, SET_START_NODE, SET_END_NODE, READY_ALGORITHM, COMPLETE_ALGORITHM,
     PAUSE_ALGORITHM, RUN_ALGORITHM, SET_PARENT_NODE, GENERATE_WALLS, CLEAR_BOARD, CLEAR_PATH, SET_DRAGGED_NODE, 
-    CLEAR_DRAGGED_NODE, SET_MASKED_NODE, APPLY_MASKED_NODE } from '../actions'
+    CLEAR_DRAGGED_NODE, SET_MASKED_NODE, APPLY_MASKED_NODE, RERUN_ALGORITHM } from '../actions'
 
 const numRows = 20  // Grid Dimensions
 const numCols = 50
@@ -113,6 +113,11 @@ function board(state = { grid: generateEmptyGrid(numRows, numCols, start, end), 
             return {
                 ...state,
                 grid: applyMaskedNode(state.grid, action.payload, state.maskedNode)
+            }
+        case RERUN_ALGORITHM:
+            return {
+                ...state,
+                grid: generateRerunAlgorithmGrid(state.grid, state.startNode, state.endNode, action.payload.algorithmSelected)
             }
         default:
             return state

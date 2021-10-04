@@ -1,8 +1,8 @@
 import { isAlgorithmRunning, nodeEquals, shouldEnqueueNode, getNeighbors, 
-    sleep, tracePath } from '../AlgorithmUtil'
+    sleep, tracePath, setPath } from '../AlgorithmUtil'
 import buckets from 'buckets-js'
 
-export const runBFS = async (queue, startNode, endNode, grid, toggleVisitedNode, toggleFrontierNode,
+export const runBFS = async (queue, grid, startNode, endNode, toggleVisitedNode, toggleFrontierNode,
     togglePathNode, completeAlgorithm, setParentNode) => {
         
     // While the algorithm has not been completed or paused
@@ -46,4 +46,31 @@ export const runBFS = async (queue, startNode, endNode, grid, toggleVisitedNode,
 
     return queue
 
+}
+
+export const rerunBFS = (grid, startNode, endNode) => {
+    const queue = buckets.Queue()
+    queue.enqueue(startNode)
+    while (!queue.isEmpty()) {
+        const currNode = queue.dequeue()
+        grid[currNode[0]][currNode[1]].isVisitedNode = true
+        grid[currNode[0]][currNode[1]].isFrontierNode = false  // this node is no longer a frontier node
+
+        if (nodeEquals(endNode, currNode)) {
+            setPath(endNode, grid)
+            break
+        }
+
+        const neighbors = getNeighbors(currNode)
+        for (const neighbor of neighbors) {
+            if (shouldEnqueueNode(neighbor, grid)) {
+                grid[neighbor[0]][neighbor[1]].isFrontierNode = true
+                grid[neighbor[0]][neighbor[1]].parent = currNode.slice()
+                queue.enqueue(neighbor)
+            }
+        }
+
+    }
+
+    return grid
 }

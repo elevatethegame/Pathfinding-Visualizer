@@ -50,6 +50,21 @@ export const tracePath = async (endNode, grid, togglePathNode) => {
     }
 }
 
+// This sets the path immediately
+// without having the trace animation (no intervals between each path node animation)
+export const setPath = (endNode, grid) => {
+    let node = endNode
+    const stack = buckets.Stack() 
+    while (node != null) {
+        stack.push(node)
+        node = grid[node[0]][node[1]].parent
+    }
+    while (!stack.isEmpty()) {
+        node = stack.pop()
+        grid[node[0]][node[1]].isPathNode = true
+    }
+}
+
 export const sleep = (duration) => {
     return new Promise(resolve => {
         setTimeout(resolve, duration)

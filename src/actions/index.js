@@ -23,8 +23,16 @@ export const SET_DRAGGED_NODE = "SET_DRAGGED_NODE"
 export const CLEAR_DRAGGED_NODE = "CLEAR_DRAGGED_NODE"
 export const SET_MASKED_NODE = "SET_MASKED_NODE"
 export const APPLY_MASKED_NODE = "APPLY_MASKED_NODE"
+export const RERUN_ALGORITHM = "RERUN_ALGORITHM"
 
 // action creators for grid state
+export const rerunAlgorithm = (algorithmSelected) => {
+    return {
+        type: RERUN_ALGORITHM,
+        payload: { algorithmSelected }
+    }
+}
+
 export const toggleVisitedNode = (row, col) => {
     return {
         type: TOGGLE_VISITED_NODE,

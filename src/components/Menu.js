@@ -20,12 +20,12 @@ function Menu(props) {
             return
         }
         
-        props.runAlgorithm()
+        props.runAlgorithm()  // Change algorithm status to running
         
         let state;
         switch (props.algorithmSelected) {
             case 'BFS':
-                state = await runBFS(props.algorithmState, props.startNode, props.endNode, props.grid, props.toggleVisitedNode, 
+                state = await runBFS(props.algorithmState, props.grid, props.startNode, props.endNode, props.toggleVisitedNode, 
                     props.toggleFrontierNode, props.togglePathNode, props.completeAlgorithm, props.setParentNode, props.clearAlgorithmState)
                 break
             case 'DFS':

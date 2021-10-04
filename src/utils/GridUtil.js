@@ -1,3 +1,5 @@
+import { rerunBFS } from "./Algorithms/BFS"
+
 // Node constructor
 export function Node() {
     this.isStartNode = false
@@ -49,6 +51,24 @@ export const generateEmptyGrid = (numRows, numCols, startNode, endNode) => {
     }
     grid[startNode[0]][startNode[1]].isStartNode = true
     grid[endNode[0]][endNode[1]].isEndNode = true
+    return grid
+}
+
+export const generateRerunAlgorithmGrid = (grid, startNode, endNode, algorithmSelected) => {
+    grid = grid.slice()
+    switch (algorithmSelected) {
+        case 'BFS':
+            grid = rerunBFS(grid, startNode, endNode)
+            break
+        case 'DFS':
+            break
+        case 'ASTAR':
+            break
+        case 'GREEDY':
+            break
+        default:
+            break
+    }
     return grid
 }
 

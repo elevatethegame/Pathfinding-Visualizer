@@ -1,12 +1,15 @@
 import React from 'react'
 import '../css/Node.css'
 import { connect } from 'react-redux'
-import { toggleWallNode, setDraggedNode, clearDraggedNode, setStartNode, setEndNode, setMaskedNode, applyMaskedNode } from '../actions'
-import { nodeEquals } from '../utils/AlgorithmUtil'
+import { toggleWallNode, setDraggedNode, clearDraggedNode, setStartNode, setEndNode, setMaskedNode, applyMaskedNode, 
+    toggleVisitedNode, toggleFrontierNode, togglePathNode, setParentNode, rerunAlgorithm, clearPath } from '../actions'
+import { nodeEquals, isAlgorithmCompleted } from '../utils/AlgorithmUtil'
+import { rerunBFS } from '../utils/Algorithms/BFS'
 
 function Node({isVisitedNode, isWallNode, isEndNode, isStartNode, isFrontierNode, isPathNode,
     toggleWallNode, row, col, startNode, endNode, draggedNode, setDraggedNode, clearDraggedNode,
-    setStartNode, setEndNode, setMaskedNode, applyMaskedNode }) {
+    setStartNode, setEndNode, setMaskedNode, applyMaskedNode, algorithmSelected, rerunAlgorithm,
+    clearPath }) {
 
     const handleMouseOver = () => {
         if (draggedNode) {  // if there was a node being dragged to this position
@@ -14,9 +17,13 @@ function Node({isVisitedNode, isWallNode, isEndNode, isStartNode, isFrontierNode
                 toggleWallNode(row, col)
             } else if (draggedNode.isStartNode) {
                 applyMaskedNode(draggedNode.row, draggedNode.col)  // restore masked node properties back to the node we came from
-                setMaskedNode(row, col)  // save the state of the node, to be reapplied to this node if we drag to somewhere else
-                setStartNode(row, col)
+                setMaskedNode(row, col)  // save the state of this node, to be reapplied to this node if we drag to somewhere else
+                setStartNode(row, col)  // replace the state of this node
                 setDraggedNode(row, col)  // update the dragged node to be this node
+                if (isAlgorithmCompleted()) {  // run the algorithm instantly
+                    clearPath()
+                    rerunAlgorithm(algorithmSelected)
+                }
             } else if (draggedNode.isEndNode) {
                 
             }
@@ -69,18 +76,22 @@ const mapStateToProps = (state, ownProps) => {
         startNode: state.board.startNode,
         endNode: state.board.endNode,
         draggedNode: state.board.draggedNode,
+        algorithmSelected: state.algorithmSelected,
     }
 }
 
 const mapDispatchToProps = (dispatch) => {
     return {
         toggleWallNode: (row, col) => dispatch(toggleWallNode(row, col)),
+        setParentNode: (row, col) => dispatch(setParentNode(row, col)),
         setDraggedNode: (row, col) => dispatch(setDraggedNode(row, col)),
         clearDraggedNode: () => dispatch(clearDraggedNode()),
         setStartNode: (row, col) => dispatch(setStartNode(row, col)),
         setEndNode: (row, col) => dispatch(setEndNode(row, col)),
         setMaskedNode: (row, col) => dispatch(setMaskedNode(row, col)),
         applyMaskedNode: (row, col) => dispatch(applyMaskedNode(row, col)),
+        rerunAlgorithm: (algorithmSelected) => dispatch(rerunAlgorithm(algorithmSelected)),
+        clearPath: () => dispatch(clearPath()),
     }
 }
 
