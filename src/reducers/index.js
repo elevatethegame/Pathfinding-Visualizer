@@ -5,7 +5,8 @@ import { SET_BFS_ALGORITHM, SET_ASTAR_ALGORITHM, SET_DFS_ALGORITHM, SET_GREEDY_A
     TOGGLE_FRONTIER_NODE, TOGGLE_PATH_NODE, TOGGLE_VISITED_NODE, TOGGLE_WALL_NODE,
     SET_ALGORITHM_STATE, CLEAR_ALGORITHM_STATE, SET_START_NODE, SET_END_NODE, READY_ALGORITHM, COMPLETE_ALGORITHM,
     PAUSE_ALGORITHM, RUN_ALGORITHM, SET_PARENT_NODE, GENERATE_WALLS, CLEAR_BOARD, CLEAR_PATH, SET_DRAGGED_NODE, 
-    CLEAR_DRAGGED_NODE, SET_MASKED_NODE, APPLY_MASKED_NODE, RERUN_ALGORITHM } from '../actions'
+    CLEAR_DRAGGED_NODE, SET_START_MASKED_NODE, APPLY_START_MASKED_NODE, RERUN_ALGORITHM, RESET_START_MASKED_NODE,
+    SET_END_MASKED_NODE, APPLY_END_MASKED_NODE, RESET_END_MASKED_NODE } from '../actions'
 
 const numRows = 20  // Grid Dimensions
 const numCols = 50
@@ -13,7 +14,7 @@ const start = [9, 15]  // Start Node
 const end = [9, 35]  // End Node
 
 function board(state = { grid: generateEmptyGrid(numRows, numCols, start, end), statistics: initializeStatistics(numRows, numCols), 
-        draggedNode: null, maskedNode: new Node(), startNode: start, endNode: end }, action) {
+        draggedNode: null, startMaskedNode: new Node(), endMaskedNode: new Node(), startNode: start, endNode: end }, action) {
     switch(action.type) {
         case TOGGLE_VISITED_NODE: {
             const { grid, statistics } = setVisitedNode(state.grid, state.statistics, action.payload)
@@ -102,17 +103,39 @@ function board(state = { grid: generateEmptyGrid(numRows, numCols, start, end), 
                 ...state,
                 draggedNode: null
             }
-        case SET_MASKED_NODE: 
+        case SET_START_MASKED_NODE: 
             return {
                 ...state,
-                maskedNode: {
+                startMaskedNode: {
                     ...state.grid[action.payload.row][action.payload.col]
                 }
             }
-        case APPLY_MASKED_NODE: 
+        case APPLY_START_MASKED_NODE: 
             return {
                 ...state,
-                grid: applyMaskedNode(state.grid, action.payload, state.maskedNode)
+                grid: applyMaskedNode(state.grid, action.payload, state.startMaskedNode)
+            }
+        case RESET_START_MASKED_NODE: 
+            return {
+                ...state,
+                startMaskedNode: new Node()
+            }
+        case SET_END_MASKED_NODE: 
+        return {
+            ...state,
+            endMaskedNode: {
+                ...state.grid[action.payload.row][action.payload.col]
+            }
+        }
+        case APPLY_END_MASKED_NODE: 
+            return {
+                ...state,
+                grid: applyMaskedNode(state.grid, action.payload, state.endMaskedNode)
+            }
+        case RESET_END_MASKED_NODE: 
+            return {
+                ...state,
+                endMaskedNode: new Node()
             }
         case RERUN_ALGORITHM:
             return {

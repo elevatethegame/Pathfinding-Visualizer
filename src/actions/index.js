@@ -21,9 +21,14 @@ export const CLEAR_BOARD = "CLEAR_BOARD"
 export const CLEAR_PATH = "CLEAR_PATH"
 export const SET_DRAGGED_NODE = "SET_DRAGGED_NODE"
 export const CLEAR_DRAGGED_NODE = "CLEAR_DRAGGED_NODE"
-export const SET_MASKED_NODE = "SET_MASKED_NODE"
-export const APPLY_MASKED_NODE = "APPLY_MASKED_NODE"
+export const SET_START_MASKED_NODE = "SET_START_MASKED_NODE"
+export const APPLY_START_MASKED_NODE = "APPLY_START_MASKED_NODE"
 export const RERUN_ALGORITHM = "RERUN_ALGORITHM"
+export const RESET_START_MASKED_NODE = "RESET_START_MASKED_NODE"
+export const SET_END_MASKED_NODE = "SET_END_MASKED_NODE"
+export const APPLY_END_MASKED_NODE = "APPLY_END_MASKED_NODE"
+export const RESET_END_MASKED_NODE = "RESET_END_MASKED_NODE"
+
 
 // action creators for grid state
 export const rerunAlgorithm = (algorithmSelected) => {
@@ -179,16 +184,44 @@ export const clearDraggedNode = (row, col) => {
     }
 }
 
-export const setMaskedNode = (row, col) => {
+export const setStartMaskedNode = (row, col) => {
     return {
-        type: SET_MASKED_NODE,
+        type: SET_START_MASKED_NODE,
         payload: {row, col}
     }
 }
 
-export const applyMaskedNode = (row, col) => {
+
+export const applyStartMaskedNode = (row, col) => {
     return {
-        type: APPLY_MASKED_NODE,
+        type: APPLY_START_MASKED_NODE,
         payload: {row, col}
+    }
+}
+
+export const setEndMaskedNode = (row, col) => {
+    return {
+        type: SET_END_MASKED_NODE,
+        payload: {row, col}
+    }
+}
+
+
+export const applyEndMaskedNode = (row, col) => {
+    return {
+        type: APPLY_END_MASKED_NODE,
+        payload: {row, col}
+    }
+}
+
+export const resetStartMaskedNode = () => {
+    return {
+        type: RESET_START_MASKED_NODE
+    }
+}
+
+export const resetEndMaskedNode = () => {
+    return {
+        type: RESET_END_MASKED_NODE
     }
 }

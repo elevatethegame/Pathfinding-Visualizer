@@ -6,7 +6,8 @@ import Carousel from './Carousel'
 import '../css/Menu.css'
 import { setBFSAlgorithm, toggleVisitedNode, toggleFrontierNode, setStartNode, setEndNode,
     setAlgorithmState, readyAlgorithm, runAlgorithm, pauseAlgorithm, completeAlgorithm,
-    togglePathNode, setParentNode, generateWalls, clearBoard, clearPath, clearAlgorithmState } from '../actions'
+    togglePathNode, setParentNode, generateWalls, clearBoard, clearPath, clearAlgorithmState, 
+    resetStartMaskedNode, resetEndMaskedNode } from '../actions'
 import { connect } from 'react-redux'
 import { runBFS } from '../utils/Algorithms/BFS'
 import { isAlgorithmRunning, isAlgorithmCompleted, isAlgorithmReady } from '../utils/AlgorithmUtil'
@@ -57,7 +58,9 @@ function Menu(props) {
                 clearBoard={props.clearBoard}
                 clearPath={props.clearPath}
                 readyAlgorithm={props.readyAlgorithm}
-                clearAlgorithmState={props.clearAlgorithmState} />
+                clearAlgorithmState={props.clearAlgorithmState}
+                resetStartMaskedNode={props.resetStartMaskedNode}
+                resetEndMaskedNode={props.resetEndMaskedNode} />
             <div className='grid-container'>
                 <Grid />
             </div>
@@ -85,6 +88,8 @@ const mapDispatchToProps = (dispatch) => {
         generateWalls: () => dispatch(generateWalls()),
         clearBoard: () => dispatch(clearBoard()),
         clearPath: () => dispatch(clearPath()),
+        resetStartMaskedNode: () => dispatch(resetStartMaskedNode()),
+        resetEndMaskedNode: () => dispatch(resetEndMaskedNode()),
     }
 }
 

@@ -3,7 +3,7 @@ import '../css/Navbar.css'
 
 
 function Navbar({ algorithmStatus, algorithmSelected, runAlgorithm, generateWalls, clearBoard, clearPath,
-    readyAlgorithm, clearAlgorithmState }) {
+    readyAlgorithm, clearAlgorithmState, resetStartMaskedNode, resetEndMaskedNode }) {
 
     const handleClickRun = () => {
         runAlgorithm()
@@ -24,6 +24,8 @@ function Navbar({ algorithmStatus, algorithmSelected, runAlgorithm, generateWall
         clearBoard()
         clearAlgorithmState()
         readyAlgorithm()
+        resetStartMaskedNode()
+        resetEndMaskedNode()
     }
 
     let runButtonText;

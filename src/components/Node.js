@@ -1,23 +1,22 @@
 import React from 'react'
 import '../css/Node.css'
 import { connect } from 'react-redux'
-import { toggleWallNode, setDraggedNode, clearDraggedNode, setStartNode, setEndNode, setMaskedNode, applyMaskedNode, 
-    toggleVisitedNode, toggleFrontierNode, togglePathNode, setParentNode, rerunAlgorithm, clearPath } from '../actions'
+import { toggleWallNode, setDraggedNode, clearDraggedNode, setStartNode, setEndNode, setStartMaskedNode, setEndMaskedNode, 
+    setParentNode, rerunAlgorithm, clearPath, applyStartMaskedNode, applyEndMaskedNode, resetEndMaskedNode, resetStartMaskedNode } from '../actions'
 import { nodeEquals, isAlgorithmCompleted, isAlgorithmRunning } from '../utils/AlgorithmUtil'
-import { rerunBFS } from '../utils/Algorithms/BFS'
 
 function Node({isVisitedNode, isWallNode, isEndNode, isStartNode, isFrontierNode, isPathNode,
     toggleWallNode, row, col, startNode, endNode, draggedNode, setDraggedNode, clearDraggedNode,
-    setStartNode, setEndNode, setMaskedNode, applyMaskedNode, algorithmSelected, rerunAlgorithm,
-    clearPath }) {
+    setStartNode, setEndNode, setStartMaskedNode, applyStartMaskedNode, algorithmSelected, rerunAlgorithm,
+    clearPath, setEndMaskedNode, applyEndMaskedNode }) {
 
     const handleMouseOver = () => {
         if (draggedNode) {  // if there was a node being dragged to this position
             if (draggedNode.isWallNode && !isVisitedNode && !isFrontierNode && !isWallNode && !isStartNode && !isEndNode) {
                 toggleWallNode(row, col)
-            } else if (draggedNode.isStartNode) {
-                applyMaskedNode(draggedNode.row, draggedNode.col)  // restore masked node properties back to the node we came from
-                setMaskedNode(row, col)  // save the state of this node, to be reapplied to this node if we drag to somewhere else
+            } else if (draggedNode.isStartNode && !isEndNode) {  // do not allow dragging start node over end node
+                applyStartMaskedNode(draggedNode.row, draggedNode.col)  // restore masked node properties back to the node we came from
+                setStartMaskedNode(row, col)  // save the state of this node, to be reapplied to this node if we drag to somewhere else
                 setStartNode(row, col)  // replace the state of this node
                 setDraggedNode(row, col)  // update the dragged node to be this node
 
@@ -25,9 +24,9 @@ function Node({isVisitedNode, isWallNode, isEndNode, isStartNode, isFrontierNode
                     clearPath()
                     rerunAlgorithm(algorithmSelected)
                 }
-            } else if (draggedNode.isEndNode) {
-                applyMaskedNode(draggedNode.row, draggedNode.col)  // restore masked node properties back to the node we came from
-                setMaskedNode(row, col)  // save the state of this node, to be reapplied to this node if we drag to somewhere else
+            } else if (draggedNode.isEndNode && !isStartNode) {  // do not allow dragging end node over start node
+                applyEndMaskedNode(draggedNode.row, draggedNode.col)  // restore masked node properties back to the node we came from
+                setEndMaskedNode(row, col)  // save the state of this node, to be reapplied to this node if we drag to somewhere else
                 setEndNode(row, col)  // replace the state of this node
                 setDraggedNode(row, col)  // update the dragged node to be this node
 
@@ -99,8 +98,12 @@ const mapDispatchToProps = (dispatch) => {
         clearDraggedNode: () => dispatch(clearDraggedNode()),
         setStartNode: (row, col) => dispatch(setStartNode(row, col)),
         setEndNode: (row, col) => dispatch(setEndNode(row, col)),
-        setMaskedNode: (row, col) => dispatch(setMaskedNode(row, col)),
-        applyMaskedNode: (row, col) => dispatch(applyMaskedNode(row, col)),
+        setStartMaskedNode: (row, col) => dispatch(setStartMaskedNode(row, col)),
+        setEndMaskedNode: (row, col) => dispatch(setEndMaskedNode(row, col)),
+        applyStartMaskedNode: (row, col) => dispatch(applyStartMaskedNode(row, col)),
+        applyEndMaskedNode: (row, col) => dispatch(applyEndMaskedNode(row, col)),
+        resetStartMaskedNode: (row, col) => dispatch(resetStartMaskedNode(row, col)),
+        resetEndMaskedNode: (row, col) => dispatch(resetEndMaskedNode(row, col)),
         rerunAlgorithm: (algorithmSelected) => dispatch(rerunAlgorithm(algorithmSelected)),
         clearPath: () => dispatch(clearPath()),
     }
