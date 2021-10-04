@@ -127,7 +127,7 @@ function board(state = { grid: generateEmptyGrid(numRows, numCols, start, end), 
                 startMaskedNode: new Node()
             }
         case SET_END_MASKED_NODE: {
-            const { statistics } = calculateMaskedStatistic(state.statistics, state.endMaskedNode)
+            const { statistics } = calculateMaskedStatistic(state.grid, state.statistics, action.payload)
             return {
                 ...state,
                 statistics,
