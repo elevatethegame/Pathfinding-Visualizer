@@ -163,7 +163,7 @@ function board(state = { grid: generateEmptyGrid(numRows, numCols, start, end), 
     }
 } 
 
-function algorithmStatus(state = 'READY', action) {
+function algorithmStatus(state = 'UNSELECTED', action) {
     switch(action.type) {
         case READY_ALGORITHM:
             return 'READY';
@@ -178,7 +178,7 @@ function algorithmStatus(state = 'READY', action) {
     }
 }
 
-function algorithmSelected(state = 'BFS', action) {  // we set initial to BFS for now to test
+function algorithmSelected(state = null, action) {  // we set initial to BFS for now to test
     switch(action.type) {
         case SET_BFS_ALGORITHM:
             return 'BFS';

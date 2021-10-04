@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Grid from './Grid'
 import Navbar from './Navbar'
 import Statbar from './Statbar'
@@ -13,6 +13,8 @@ import { runBFS } from '../utils/Algorithms/BFS'
 import { isAlgorithmRunning, isAlgorithmCompleted, isAlgorithmReady } from '../utils/AlgorithmUtil'
 
 function Menu(props) {
+
+    const [ showCarousel, setShowCarousel ] = useState(false)
 
     const runAlgorithm = async () => {
 
@@ -60,14 +62,16 @@ function Menu(props) {
                 readyAlgorithm={props.readyAlgorithm}
                 clearAlgorithmState={props.clearAlgorithmState}
                 resetStartMaskedNode={props.resetStartMaskedNode}
-                resetEndMaskedNode={props.resetEndMaskedNode} />
+                resetEndMaskedNode={props.resetEndMaskedNode}
+                toggleShowCarousel={() => setShowCarousel(!showCarousel)} />
             <div className='grid-container'>
                 <Grid />
             </div>
             <div className='statbar-container'>
                 <Statbar />
             </div>
-            {/* <Carousel /> */}
+            {showCarousel && <Carousel toggleShowCarousel={() => setShowCarousel(!showCarousel)} 
+                setBFSAlgorithm={props.setBFSAlgorithm} readyAlgorithm={props.readyAlgorithm} />}
         </div>
     )
 }

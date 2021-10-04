@@ -23,10 +23,39 @@
     top: 15px;
     right: 18px;
     font-size: 35px;
-    color: black;
+    color: rgb(167, 50, 50);
+}
+
+.window-close-icon:hover {
+    cursor: pointer;
+    color: rgb(105, 26, 26);
 }
 
 .arrow-circle-icon {
     font-size: 40px;
-    color: rgb(27, 72, 114);
+    color: rgb(39, 102, 161);
+}
+
+.arrow-circle-icon:hover {
+    cursor: pointer;
+    font-size: 40px;
+    color: rgb(26, 69, 110);
+}
+
+.algorithm-description {
+    font-size: 18px;
+}
+
+.carousel-select-button {
+    background-color: rgb(39, 102, 161);
+    border-radius: 4px;
+    border: 1px solid rgb(37, 93, 146);
+    padding: 10px 20px;
+    color: white;
+    font-size: 19px;
+}
+
+.carousel-select-button:hover {
+    cursor: pointer;
+    background-color: rgb(26, 69, 110);
 }

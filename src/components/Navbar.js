@@ -3,7 +3,7 @@ import '../css/Navbar.css'
 
 
 function Navbar({ algorithmStatus, algorithmSelected, runAlgorithm, generateWalls, clearBoard, clearPath,
-    readyAlgorithm, clearAlgorithmState, resetStartMaskedNode, resetEndMaskedNode }) {
+    readyAlgorithm, clearAlgorithmState, resetStartMaskedNode, resetEndMaskedNode, toggleShowCarousel }) {
 
     const handleClickRun = () => {
         runAlgorithm()
@@ -63,7 +63,7 @@ function Navbar({ algorithmStatus, algorithmSelected, runAlgorithm, generateWall
                     </li>
                     <li className='navbar-item'>
                         <button  className={`navbar-button ${generateWallsButtonDisabled ? 'navbar-disabled-button' : 'navbar-normal-button'}`}
-                            disabled={generateWallsButtonDisabled}>Select Algorithm</button>
+                            disabled={generateWallsButtonDisabled} onClick={toggleShowCarousel}>Select Algorithm</button>
                     </li>
                     <li className='navbar-item'>
                         <button className={`navbar-button navbar-run-button ${runButtonClass}`} disabled={runButtonDisabled} onClick={handleClickRun}>
