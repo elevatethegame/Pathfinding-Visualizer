@@ -19,6 +19,7 @@
     width: 100%;
     margin: 0;
     align-items: center;
+    justify-content: space-between;
 }
 
 .navbar-item {
@@ -37,6 +38,12 @@
 
 .navbar-normal-button {
     background: none;
+}
+
+.navbar-disabled-button {
+    background: none;
+    color: darkgrey;
+    cursor: url('../assets/images/not-allowed-symbol-svgrepo-com.svg'), auto;
 }
 
 .navbar-normal-button:hover {

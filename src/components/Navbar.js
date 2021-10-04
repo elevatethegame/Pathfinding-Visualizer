@@ -30,24 +30,27 @@ function Navbar({ algorithmStatus, algorithmSelected, runAlgorithm, generateWall
 
     let runButtonText;
     let runButtonClass;
-    let runButtonDisabled = '';
+    let runButtonDisabled = false
+    let generateWallsButtonDisabled = false
     if (algorithmStatus === 'UNSELECTED') {
         runButtonText = 'Select an Algorithm'
         runButtonClass = 'unselected'
-        runButtonDisabled = 'true'
+        runButtonDisabled = true
     } else if (algorithmStatus === 'READY') {
         runButtonText = 'Run'
         runButtonClass = 'run'
     } else if (algorithmStatus === 'PAUSED') {
         runButtonText = 'Resume'
         runButtonClass = 'resume'
+        generateWallsButtonDisabled = true
     } else if (algorithmStatus === 'RUNNING') {
         runButtonText = 'Pause'
         runButtonClass = 'pause'
+        generateWallsButtonDisabled = true
     } else {  // if 'COMPLETED'
         runButtonText = 'Completed'
         runButtonClass = 'completed'
-        runButtonDisabled = 'true'
+        runButtonDisabled = true
     }
 
     return (
@@ -55,10 +58,12 @@ function Navbar({ algorithmStatus, algorithmSelected, runAlgorithm, generateWall
             <div className='navbar-list-container'>
                 <ul className='navbar-list'>
                     <li className='navbar-item'>
-                        <button className='navbar-button navbar-normal-button' onClick={handleClickGenerateWalls}>Generate Walls</button>
+                        <button className={`navbar-button ${generateWallsButtonDisabled ? 'navbar-disabled-button' : 'navbar-normal-button'}`} 
+                            onClick={handleClickGenerateWalls} disabled={generateWallsButtonDisabled}>Generate Walls</button>
                     </li>
                     <li className='navbar-item'>
-                        <button  className='navbar-button navbar-normal-button'>Select Algorithm</button>
+                        <button  className={`navbar-button ${generateWallsButtonDisabled ? 'navbar-disabled-button' : 'navbar-normal-button'}`}
+                            disabled={generateWallsButtonDisabled}>Select Algorithm</button>
                     </li>
                     <li className='navbar-item'>
                         <button className={`navbar-button navbar-run-button ${runButtonClass}`} disabled={runButtonDisabled} onClick={handleClickRun}>
