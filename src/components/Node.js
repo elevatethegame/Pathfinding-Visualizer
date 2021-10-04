@@ -20,12 +20,21 @@ function Node({isVisitedNode, isWallNode, isEndNode, isStartNode, isFrontierNode
                 setMaskedNode(row, col)  // save the state of this node, to be reapplied to this node if we drag to somewhere else
                 setStartNode(row, col)  // replace the state of this node
                 setDraggedNode(row, col)  // update the dragged node to be this node
-                if (isAlgorithmCompleted()) {  // run the algorithm instantly
+
+                if (isAlgorithmCompleted()) {  // if the algorithm has status completed, run the algorithm instantly
                     clearPath()
                     rerunAlgorithm(algorithmSelected)
                 }
             } else if (draggedNode.isEndNode) {
-                
+                applyMaskedNode(draggedNode.row, draggedNode.col)  // restore masked node properties back to the node we came from
+                setMaskedNode(row, col)  // save the state of this node, to be reapplied to this node if we drag to somewhere else
+                setEndNode(row, col)  // replace the state of this node
+                setDraggedNode(row, col)  // update the dragged node to be this node
+
+                if (isAlgorithmCompleted()) {  // if the algorithm has status completed, run the algorithm instantly
+                    clearPath()
+                    rerunAlgorithm(algorithmSelected)
+                }
             }
         }
     }
