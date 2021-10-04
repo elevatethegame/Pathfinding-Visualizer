@@ -54,6 +54,22 @@ export const generateEmptyGrid = (numRows, numCols, startNode, endNode) => {
     return grid
 }
 
+const calculateStatistics = (grid) => {
+    const numRows = grid.length
+    const numCols = grid[0].length
+    const statistics = new Statistic(numRows * numCols)
+    for (let i = 0; i < numRows; i++) {
+        for (let j = 0; j < numCols; j++) {
+            statistics.numWall += grid[i][j].isWallNode ? 1 : 0
+            statistics.numVisited += grid[i][j].isVisitedNode ? 1 : 0
+            statistics.numFrontier += grid[i][j].isFrontierNode ? 1 : 0
+            statistics.numPath += grid[i][j].isPathNode ? 1 : 0
+        }
+    }
+    console.log(statistics)
+    return statistics
+}
+
 export const generateRerunAlgorithmGrid = (grid, startNode, endNode, algorithmSelected) => {
     grid = grid.slice()
     switch (algorithmSelected) {
@@ -69,7 +85,10 @@ export const generateRerunAlgorithmGrid = (grid, startNode, endNode, algorithmSe
         default:
             break
     }
-    return grid
+    return { 
+        grid, 
+        statistics: calculateStatistics(grid) 
+    }
 }
 
 export const setVisitedNode = (grid, statistics, {row, col}) => {
@@ -142,10 +161,27 @@ export const setParentNode = (grid, {row, col, parent}) => {
     return grid
 }
 
-export const applyMaskedNode = (grid, {row, col}, maskedNode) => {
+export const applyMaskedNode = (grid, statistics, {row, col}, maskedNode) => {
     grid = grid.slice()
+    
     grid[row][col] = maskedNode;
-    return grid
+    return { 
+        grid,
+        statistics: {
+            ...statistics,
+            numWall: statistics.numWall + (maskedNode.isWallNode ? 1 : 0),
+        }
+    }
+}
+
+export const calculateMaskedStatistic = (grid, statistics, {row, col}) => {
+    const newMaskedNode = grid[row][col]
+    return {
+        statistics: {
+            ...statistics,
+            numWall: statistics.numWall - (newMaskedNode.isWallNode ? 1 : 0),
+        }
+    }
 }
 
 export const generateWalls = (grid, statistics) => {

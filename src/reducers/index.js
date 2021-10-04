@@ -1,6 +1,6 @@
 import { combineReducers } from "redux"
 import { generateEmptyGrid, setEndNode, setFrontierNode, setPathNode, setStartNode, setVisitedNode, setWallNode,
-    setParentNode, generateWalls, clearBoard, clearPath, initializeStatistics, Node, applyMaskedNode, generateRerunAlgorithmGrid } from "../utils/GridUtil"
+    setParentNode, generateWalls, clearBoard, clearPath, initializeStatistics, Node, applyMaskedNode, generateRerunAlgorithmGrid, calculateMaskedStatistic } from "../utils/GridUtil"
 import { SET_BFS_ALGORITHM, SET_ASTAR_ALGORITHM, SET_DFS_ALGORITHM, SET_GREEDY_ALGORITHM,
     TOGGLE_FRONTIER_NODE, TOGGLE_PATH_NODE, TOGGLE_VISITED_NODE, TOGGLE_WALL_NODE,
     SET_ALGORITHM_STATE, CLEAR_ALGORITHM_STATE, SET_START_NODE, SET_END_NODE, READY_ALGORITHM, COMPLETE_ALGORITHM,
@@ -103,45 +103,61 @@ function board(state = { grid: generateEmptyGrid(numRows, numCols, start, end), 
                 ...state,
                 draggedNode: null
             }
-        case SET_START_MASKED_NODE: 
+        case SET_START_MASKED_NODE: {
+            const { statistics } = calculateMaskedStatistic(state.grid, state.statistics, action.payload)
             return {
                 ...state,
+                statistics,
                 startMaskedNode: {
                     ...state.grid[action.payload.row][action.payload.col]
                 }
             }
-        case APPLY_START_MASKED_NODE: 
+        }
+        case APPLY_START_MASKED_NODE: {
+            const { grid, statistics } = applyMaskedNode(state.grid, state.statistics, action.payload, state.startMaskedNode)
             return {
                 ...state,
-                grid: applyMaskedNode(state.grid, action.payload, state.startMaskedNode)
+                grid,
+                statistics 
             }
+        }
         case RESET_START_MASKED_NODE: 
             return {
                 ...state,
                 startMaskedNode: new Node()
             }
-        case SET_END_MASKED_NODE: 
-        return {
-            ...state,
-            endMaskedNode: {
-                ...state.grid[action.payload.row][action.payload.col]
-            }
-        }
-        case APPLY_END_MASKED_NODE: 
+        case SET_END_MASKED_NODE: {
+            const { statistics } = calculateMaskedStatistic(state.statistics, state.endMaskedNode)
             return {
                 ...state,
-                grid: applyMaskedNode(state.grid, action.payload, state.endMaskedNode)
+                statistics,
+                endMaskedNode: {
+                    ...state.grid[action.payload.row][action.payload.col]
+                }
             }
+        }
+        case APPLY_END_MASKED_NODE: {
+            const { grid, statistics } = applyMaskedNode(state.grid, state.statistics, action.payload, state.endMaskedNode)
+            return {
+                ...state,
+                grid,
+                statistics 
+            }
+        }
         case RESET_END_MASKED_NODE: 
             return {
                 ...state,
                 endMaskedNode: new Node()
             }
-        case RERUN_ALGORITHM:
+        case RERUN_ALGORITHM: {
+            const { grid, statistics } = generateRerunAlgorithmGrid(state.grid, state.startNode, 
+                state.endNode, action.payload.algorithmSelected)
             return {
                 ...state,
-                grid: generateRerunAlgorithmGrid(state.grid, state.startNode, state.endNode, action.payload.algorithmSelected)
+                grid,
+                statistics
             }
+        }
         default:
             return state
     }
