@@ -16,17 +16,23 @@ function Node({isVisitedNode, isWallNode, isEndNode, isStartNode, isFrontierNode
                 toggleWallNode(row, col)
             } else if (draggedNode.isStartNode && !isEndNode) {  // do not allow dragging start node over end node
                 applyStartMaskedNode(draggedNode.row, draggedNode.col)  // restore masked node properties back to the node we came from
-                setStartMaskedNode(row, col)  // save the state of this node, to be reapplied to this node if we drag to somewhere else
+                // do not save visited, frontier or path node states
+                // or else if start node masks one of these, and we click clearPath button afterward,
+                // upon moving the start node away the visited, frontier or path node we have saved will
+                // be applied to that particular node, which is the wrong behavior 
+                if (!isVisitedNode && !isFrontierNode && !isPathNode)  
+                    setStartMaskedNode(row, col)  // save the state of this node, to be reapplied to this node if we drag to somewhere else
                 setStartNode(row, col)  // replace the state of this node
                 setDraggedNode(row, col)  // update the dragged node to be this node
 
                 if (isAlgorithmCompleted()) {  // if the algorithm has status completed, run the algorithm instantly
-                    clearPath()
-                    rerunAlgorithm(algorithmSelected)
+                    clearPath()  // clear all the node state except the walls
+                    rerunAlgorithm(algorithmSelected)  // draw the new path, visited and frontier nodes for this new start position
                 }
             } else if (draggedNode.isEndNode && !isStartNode) {  // do not allow dragging end node over start node
                 applyEndMaskedNode(draggedNode.row, draggedNode.col)  // restore masked node properties back to the node we came from
-                setEndMaskedNode(row, col)  // save the state of this node, to be reapplied to this node if we drag to somewhere else
+                if (!isVisitedNode && !isFrontierNode && !isPathNode)
+                    setEndMaskedNode(row, col)  // save the state of this node, to be reapplied to this node if we drag to somewhere else
                 setEndNode(row, col)  // replace the state of this node
                 setDraggedNode(row, col)  // update the dragged node to be this node
 
