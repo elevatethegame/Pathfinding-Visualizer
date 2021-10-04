@@ -92,8 +92,8 @@ const mapStateToProps = (state) => {
     return {
         grid: state.board.grid,
         algorithmSelected: state.algorithmSelected,
-        startNode: state.startNode,
-        endNode: state.endNode,
+        startNode: state.board.startNode,
+        endNode: state.board.endNode,
         algorithmState: state.algorithmState,
         algorithmStatus: state.algorithmStatus,
         statistics: state.board.statistics,
