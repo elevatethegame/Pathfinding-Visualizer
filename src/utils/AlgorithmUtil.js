@@ -5,6 +5,10 @@ export const isAlgorithmRunning = () => {
     return store.getState().algorithmStatus === 'RUNNING'
 }
 
+export const isAlgorithmUnselected = () => {
+    return store.getState().algorithmStatus === 'UNSELECTED'
+}
+
 export const isAlgorithmCompleted = () => {
     return store.getState().algorithmStatus === 'COMPLETED'
 }

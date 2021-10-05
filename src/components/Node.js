@@ -3,7 +3,7 @@ import '../css/Node.css'
 import { connect } from 'react-redux'
 import { toggleWallNode, setDraggedNode, clearDraggedNode, setStartNode, setEndNode, setStartMaskedNode, setEndMaskedNode, 
     setParentNode, rerunAlgorithm, clearPath, applyStartMaskedNode, applyEndMaskedNode, resetEndMaskedNode, resetStartMaskedNode } from '../actions'
-import { nodeEquals, isAlgorithmCompleted, isAlgorithmRunning } from '../utils/AlgorithmUtil'
+import { nodeEquals, isAlgorithmCompleted, isAlgorithmUnselected, isAlgorithmReady } from '../utils/AlgorithmUtil'
 
 function Node({isVisitedNode, isWallNode, isEndNode, isStartNode, isFrontierNode, isPathNode,
     toggleWallNode, row, col, startNode, endNode, draggedNode, setDraggedNode, clearDraggedNode,
@@ -45,7 +45,7 @@ function Node({isVisitedNode, isWallNode, isEndNode, isStartNode, isFrontierNode
     }
 
     const handleMouseDown = () => {
-        if (!isAlgorithmRunning()) {  // only allow interactions with the grid when not running
+        if (isAlgorithmReady() || isAlgorithmCompleted() || isAlgorithmUnselected()) {  // only allow interactions with the grid when not running
             if (!nodeEquals([row, col], startNode) && !nodeEquals([row, col], endNode) && !isVisitedNode && !isFrontierNode && !isPathNode)
                 toggleWallNode(row, col)
             setDraggedNode(row, col)  // this is the current node being dragged

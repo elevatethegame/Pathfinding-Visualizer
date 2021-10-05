@@ -4,7 +4,7 @@ import Navbar from './Navbar'
 import Statbar from './Statbar'
 import Carousel from './Carousel'
 import '../css/Menu.css'
-import { setBFSAlgorithm, toggleVisitedNode, toggleFrontierNode, setStartNode, setEndNode,
+import { setBFSAlgorithm, toggleVisitedNode, toggleFrontierNode,
     setAlgorithmState, readyAlgorithm, runAlgorithm, pauseAlgorithm, completeAlgorithm,
     togglePathNode, setParentNode, generateWalls, clearBoard, clearPath, clearAlgorithmState, 
     resetStartMaskedNode, resetEndMaskedNode, setDFSAlgorithm } from '../actions'
