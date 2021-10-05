@@ -2,9 +2,10 @@ import React, { useState } from 'react'
 import '../css/Carousel.css'
 import { FaArrowAltCircleLeft, FaArrowAltCircleRight } from "react-icons/fa";
 import { AiFillCloseCircle } from "react-icons/ai";
+import { isAlgorithmUnselected } from '../utils/AlgorithmUtil';
 
 function Carousel({ toggleShowCarousel, setBFSAlgorithm, readyAlgorithm, setDFSAlgorithm }) {
-    const algorithms = [{name: 'BFS', header: 'BFS Algorithm', select: setBFSAlgorithm}, {name: 'DFS', header: 'DFS Algorithm', select: setDFSAlgorithm}]
+    const algorithms = [{name: 'BFS', header: 'BFS Algorithm', dispatch: setBFSAlgorithm}, {name: 'DFS', header: 'DFS Algorithm', dispatch: setDFSAlgorithm}]
     const [ slideNum, setSlideNum ] = useState(0)
 
     // Custom modulo function. The default Javascript modulo operator that gives -3 % 4 = -3. Instead, we want it to be 1
@@ -13,9 +14,10 @@ function Carousel({ toggleShowCarousel, setBFSAlgorithm, readyAlgorithm, setDFSA
     }
 
     const handleClickSelect = (slideNum) => {
-        algorithms[slideNum].select()
+        algorithms[slideNum].dispatch()
         toggleShowCarousel()
-        readyAlgorithm()
+        if (isAlgorithmUnselected())
+            readyAlgorithm()
     }
 
     const handleClickLeft = () => {
