@@ -1,4 +1,5 @@
 import { rerunBFS } from "./Algorithms/BFS"
+import { rerunDFS } from "./Algorithms/DFS"
 
 // Node constructor
 export function Node() {
@@ -77,6 +78,7 @@ export const generateRerunAlgorithmGrid = (grid, startNode, endNode, algorithmSe
             grid = rerunBFS(grid, startNode, endNode)
             break
         case 'DFS':
+            grid = rerunDFS(grid, startNode, endNode)
             break
         case 'ASTAR':
             break

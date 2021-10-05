@@ -28,7 +28,7 @@ export const getNeighbors = (node) => {
 }
 
 // Enqueue the Node only if it is within the range of the grid, not visited, not a frontier and not a wall node
-export const shouldEnqueueNode = (node, grid) => {
+export const shouldAddNode = (node, grid) => {
     const m = grid.length
     const n = grid[0].length
     const i = node[0]

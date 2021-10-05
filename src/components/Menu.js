@@ -7,9 +7,10 @@ import '../css/Menu.css'
 import { setBFSAlgorithm, toggleVisitedNode, toggleFrontierNode, setStartNode, setEndNode,
     setAlgorithmState, readyAlgorithm, runAlgorithm, pauseAlgorithm, completeAlgorithm,
     togglePathNode, setParentNode, generateWalls, clearBoard, clearPath, clearAlgorithmState, 
-    resetStartMaskedNode, resetEndMaskedNode } from '../actions'
+    resetStartMaskedNode, resetEndMaskedNode, setDFSAlgorithm } from '../actions'
 import { connect } from 'react-redux'
 import { runBFS } from '../utils/Algorithms/BFS'
+import { runDFS } from '../utils/Algorithms/DFS'
 import { isAlgorithmRunning, isAlgorithmCompleted, isAlgorithmReady } from '../utils/AlgorithmUtil'
 
 function Menu(props) {
@@ -32,6 +33,8 @@ function Menu(props) {
                     props.toggleFrontierNode, props.togglePathNode, props.completeAlgorithm, props.setParentNode, props.clearAlgorithmState)
                 break
             case 'DFS':
+                state = await runDFS(props.algorithmState, props.grid, props.startNode, props.endNode, props.toggleVisitedNode, 
+                    props.toggleFrontierNode, props.togglePathNode, props.completeAlgorithm, props.setParentNode, props.clearAlgorithmState)
                 break
             case 'ASTAR':
                 break
@@ -71,7 +74,7 @@ function Menu(props) {
                 <Statbar />
             </div>
             {showCarousel && <Carousel toggleShowCarousel={() => setShowCarousel(!showCarousel)} 
-                setBFSAlgorithm={props.setBFSAlgorithm} readyAlgorithm={props.readyAlgorithm} />}
+                setBFSAlgorithm={props.setBFSAlgorithm} readyAlgorithm={props.readyAlgorithm} setDFSAlgorithm={props.setDFSAlgorithm} />}
         </div>
     )
 }
@@ -79,6 +82,7 @@ function Menu(props) {
 const mapDispatchToProps = (dispatch) => {
     return {
         setBFSAlgorithm: () => dispatch(setBFSAlgorithm()),
+        setDFSAlgorithm: () => dispatch(setDFSAlgorithm()),
         toggleVisitedNode: (row, col) => dispatch(toggleVisitedNode(row, col)),
         toggleFrontierNode: (row, col) => dispatch(toggleFrontierNode(row, col)),
         togglePathNode: (row, col) => dispatch(togglePathNode(row, col)),
