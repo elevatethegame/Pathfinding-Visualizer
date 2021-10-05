@@ -67,7 +67,6 @@ const calculateStatistics = (grid) => {
             statistics.numPath += grid[i][j].isPathNode ? 1 : 0
         }
     }
-    console.log(statistics)
     return statistics
 }
 
@@ -166,7 +165,7 @@ export const setParentNode = (grid, {row, col, parent}) => {
 export const applyMaskedNode = (grid, statistics, {row, col}, maskedNode) => {
     grid = grid.slice()
     
-    grid[row][col] = maskedNode;
+    grid[row][col] = { ...maskedNode };
     return { 
         grid,
         statistics: {
