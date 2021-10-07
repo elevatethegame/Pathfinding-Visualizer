@@ -7,12 +7,15 @@ export const runAStar = async (priorityQueue, grid, startNode, endNode, toggleVi
         
     // While the algorithm has not been completed or paused
     while (isAlgorithmRunning()) {
-        
         // Create a new priorityQueue if the current algorithm state is empty; this is the first iteration
         if (!priorityQueue) {
             priorityQueue = buckets.PriorityQueue((node_1, node_2) => {
-                return grid[node_1.row][node_1.col].f - grid[node_2.row][node_2.col].f
+                return grid[node_2.row][node_2.col].f - grid[node_1.row][node_1.col].f
             })
+            const h = calculateManhattanDistance(startNode, endNode)
+            const g = 0
+            const f = h + g
+            setEstimateValues(startNode.row, startNode.col, f, g, h)
             priorityQueue.enqueue(startNode)
         }
 
@@ -58,7 +61,15 @@ export const runAStar = async (priorityQueue, grid, startNode, endNode, toggleVi
 // corresponding to the completed algorithm 
 // (rerun does not have the tracing animation; no timeout between each node visit => instantaneous render of traversed graph)
 export const rerunAStar = (grid, startNode, endNode) => {
-    const priorityQueue = buckets.priorityQueue()
+    const priorityQueue = buckets.PriorityQueue((node_1, node_2) => {
+        return grid[node_2.row][node_2.col].f - grid[node_1.row][node_1.col].f
+    })
+    const h = calculateManhattanDistance(startNode, endNode)
+    const g = 0
+    const f = h + g
+    grid[startNode.row][startNode.col].f = f
+    grid[startNode.row][startNode.col].g = g
+    grid[startNode.row][startNode.col].h = h
     priorityQueue.enqueue(startNode)
     while (!priorityQueue.isEmpty()) {
         const currNode = priorityQueue.dequeue()

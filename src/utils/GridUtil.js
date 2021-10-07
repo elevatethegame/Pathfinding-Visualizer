@@ -1,3 +1,4 @@
+import { rerunAStar } from "./Algorithms/AStar"
 import { rerunBFS } from "./Algorithms/BFS"
 import { rerunDFS } from "./Algorithms/DFS"
 
@@ -83,6 +84,7 @@ export const generateRerunAlgorithmGrid = (grid, startNode, endNode, algorithmSe
             grid = rerunDFS(grid, startNode, endNode)
             break
         case 'ASTAR':
+            grid = rerunAStar(grid, startNode, endNode)
             break
         case 'GREEDY':
             break
@@ -220,21 +222,15 @@ export const generateWalls = (grid, statistics) => {
     }
 }
 
-export const clearBoard = (grid, statistics) => {
+export const clearBoard = (grid, startNode, endNode) => {
     grid = grid.slice()
     for (let i = 0; i < grid.length; i++) {
         for (let j = 0; j < grid[0].length; j++) {
-            const node = grid[i][j]
-            if (!node.isStartNode && !node.isEndNode) {
-                grid[i][j] = new Node()
-            } else {
-                node.isWallNode = false
-                node.isVisitedNode = false
-                node.isPathNode = false
-                node.parent = null
-            }
+            grid[i][j] = new Node()
         }
     }
+    grid[startNode.row][startNode.col].isStartNode = true
+    grid[endNode.row][endNode.col].isEndNode = true
     return { 
         grid, 
         statistics: initializeStatistics(grid.length, grid[0].length)
@@ -250,6 +246,9 @@ export const clearPath = (grid, statistics) => {
             node.isVisitedNode = false
             node.isFrontierNode = false
             node.parent = null
+            node.g = null
+            node.f = null
+            node.h = null
         }
     }
     return { 

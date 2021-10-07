@@ -75,7 +75,7 @@ function board(state = { grid: generateEmptyGrid(numRows, numCols, start, end), 
             }
         }
         case CLEAR_BOARD: {
-            const { grid, statistics } = clearBoard(state.grid, state.statistics)
+            const { grid, statistics } = clearBoard(state.grid, state.startNode, state.endNode)
             return {
                 ...state,
                 grid,
