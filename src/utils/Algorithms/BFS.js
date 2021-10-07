@@ -21,8 +21,8 @@ export const runBFS = async (queue, grid, startNode, endNode, toggleVisitedNode,
 
         // Perform one iteration of BFS
         const currNode = queue.dequeue()
-        toggleVisitedNode(currNode[0], currNode[1])
-        toggleFrontierNode(currNode[0], currNode[1])  // this node is no longer a frontier node
+        toggleVisitedNode(currNode.row, currNode.col)
+        toggleFrontierNode(currNode.row, currNode.col)  // this node is no longer a frontier node
 
         if (nodeEquals(endNode, currNode)) {
             await tracePath(endNode, grid, togglePathNode)
@@ -33,8 +33,8 @@ export const runBFS = async (queue, grid, startNode, endNode, toggleVisitedNode,
         const neighbors = getNeighbors(currNode)
         for (const neighbor of neighbors) {
             if (shouldAddNode(neighbor, grid)) {
-                toggleFrontierNode(neighbor[0], neighbor[1])
-                setParentNode(neighbor[0], neighbor[1], currNode.slice())
+                toggleFrontierNode(neighbor.row, neighbor.col)
+                setParentNode(neighbor.row, neighbor.col, { ...currNode })
                 queue.enqueue(neighbor)
             }
         }
@@ -56,8 +56,8 @@ export const rerunBFS = (grid, startNode, endNode) => {
     queue.enqueue(startNode)
     while (!queue.isEmpty()) {
         const currNode = queue.dequeue()
-        grid[currNode[0]][currNode[1]].isVisitedNode = true
-        grid[currNode[0]][currNode[1]].isFrontierNode = false  // this node is no longer a frontier node
+        grid[currNode.row][currNode.col].isVisitedNode = true
+        grid[currNode.row][currNode.col].isFrontierNode = false  // this node is no longer a frontier node
 
         if (nodeEquals(endNode, currNode)) {
             setPath(endNode, grid)
@@ -67,8 +67,8 @@ export const rerunBFS = (grid, startNode, endNode) => {
         const neighbors = getNeighbors(currNode)
         for (const neighbor of neighbors) {
             if (shouldAddNode(neighbor, grid)) {
-                grid[neighbor[0]][neighbor[1]].isFrontierNode = true
-                grid[neighbor[0]][neighbor[1]].parent = currNode.slice()
+                grid[neighbor.row][neighbor.col].isFrontierNode = true
+                grid[neighbor.row][neighbor.col].parent = { ...currNode }
                 queue.enqueue(neighbor)
             }
         }

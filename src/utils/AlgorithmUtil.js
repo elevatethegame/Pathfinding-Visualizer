@@ -18,7 +18,7 @@ export const isAlgorithmReady = () => {
 }
 
 export const nodeEquals = (node_1, node_2) => {
-    return node_1[0] === node_2[0] && node_1[1] === node_2[1]
+    return node_1.row === node_2.row && node_1.col === node_2.col
 }
 
 export const getNeighbors = (node) => {
@@ -26,7 +26,7 @@ export const getNeighbors = (node) => {
     const dy = [0, 0, -1, 1]  // directions of i
     const dx = [1, -1, 0, 0]  // directions of j
     for (let i = 0; i < dy.length; i++) {
-        neighbors.push([node[0] + dy[i], node[1] + dx[i]])
+        neighbors.push({ row: node.row + dy[i], col: node.col + dx[i] })
     }
     return neighbors
 }
@@ -35,8 +35,8 @@ export const getNeighbors = (node) => {
 export const shouldAddNode = (node, grid) => {
     const m = grid.length
     const n = grid[0].length
-    const i = node[0]
-    const j = node[1]
+    const i = node.row
+    const j = node.col
     return i >= 0 && i < m && j >= 0 && j < n && !grid[i][j].isVisitedNode && !grid[i][j].isWallNode && !grid[i][j].isFrontierNode
 }
 
@@ -45,11 +45,11 @@ export const tracePath = async (endNode, grid, togglePathNode) => {
     const stack = buckets.Stack() 
     while (node != null) {
         stack.push(node)
-        node = grid[node[0]][node[1]].parent
+        node = grid[node.row][node.col].parent
     }
     while (!stack.isEmpty()) {
         node = stack.pop()
-        togglePathNode(node[0], node[1])
+        togglePathNode(node.row, node.col)
         await sleep(40)
     }
 }
@@ -61,11 +61,11 @@ export const setPath = (endNode, grid) => {
     const stack = buckets.Stack() 
     while (node != null) {
         stack.push(node)
-        node = grid[node[0]][node[1]].parent
+        node = grid[node.row][node.col].parent
     }
     while (!stack.isEmpty()) {
         node = stack.pop()
-        grid[node[0]][node[1]].isPathNode = true
+        grid[node.row][node.col].isPathNode = true
     }
 }
 

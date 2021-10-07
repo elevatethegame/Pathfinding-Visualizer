@@ -10,8 +10,8 @@ import { SET_BFS_ALGORITHM, SET_ASTAR_ALGORITHM, SET_DFS_ALGORITHM, SET_GREEDY_A
 
 const numRows = 20  // Grid Dimensions
 const numCols = 50
-const start = [9, 15]  // Start Node
-const end = [9, 35]  // End Node
+const start = {row: 9, col: 15 }  // Start Node
+const end = { row: 9, col: 35 }  // End Node
 
 function board(state = { grid: generateEmptyGrid(numRows, numCols, start, end), statistics: initializeStatistics(numRows, numCols), 
         draggedNode: null, startMaskedNode: new Node(), endMaskedNode: new Node(), startNode: start, endNode: end }, action) {
@@ -52,13 +52,13 @@ function board(state = { grid: generateEmptyGrid(numRows, numCols, start, end), 
             return {
                 ...state,
                 grid: setStartNode(state.grid, action.payload),
-                startNode: [action.payload.row, action.payload.col]
+                startNode: { row: action.payload.row, col: action.payload.col }
             }
         case SET_END_NODE:
             return {
                 ...state,
                 grid: setEndNode(state.grid, action.payload),
-                endNode: [action.payload.row, action.payload.col]
+                endNode: { row: action.payload.row, col: action.payload.col }
             }
         case SET_PARENT_NODE:
             return {

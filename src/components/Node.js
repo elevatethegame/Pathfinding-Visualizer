@@ -42,7 +42,7 @@ function Node({isVisitedNode, isWallNode, isEndNode, isStartNode, isFrontierNode
 
     const handleMouseDown = () => {
         if (isAlgorithmReady() || isAlgorithmCompleted() || isAlgorithmUnselected()) {  // only allow interactions with the grid when not running
-            if (!nodeEquals([row, col], startNode) && !nodeEquals([row, col], endNode) && !isVisitedNode && !isFrontierNode && !isPathNode)
+            if (!nodeEquals({row, col}, startNode) && !nodeEquals({row, col}, endNode) && !isVisitedNode && !isFrontierNode && !isPathNode)
                 toggleWallNode(row, col)
             setDraggedNode(row, col)  // this is the current node being dragged
         }

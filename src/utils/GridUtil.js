@@ -9,7 +9,7 @@ export function Node() {
     this.isFrontierNode = false
     this.isVisitedNode = false
     this.isPathNode = false
-    this.parent = null
+    this.parent = null  // coordinates of the parent
 }
 
 export const initializeStartNode = () => {
@@ -50,8 +50,8 @@ export const generateEmptyGrid = (numRows, numCols, startNode, endNode) => {
             grid[i].push(new Node())
         }
     }
-    grid[startNode[0]][startNode[1]].isStartNode = true
-    grid[endNode[0]][endNode[1]].isEndNode = true
+    grid[startNode.row][startNode.col].isStartNode = true
+    grid[endNode.row][endNode.col].isEndNode = true
     return grid
 }
 
@@ -220,6 +220,7 @@ export const clearBoard = (grid, statistics) => {
                 node.isWallNode = false
                 node.isVisitedNode = false
                 node.isPathNode = false
+                node.parent = null
             }
         }
     }
@@ -237,6 +238,7 @@ export const clearPath = (grid, statistics) => {
             node.isPathNode = false
             node.isVisitedNode = false
             node.isFrontierNode = false
+            node.parent = null
         }
     }
     return { 
