@@ -51,6 +51,7 @@ function Navbar({ algorithmStatus, algorithmSelected, runAlgorithm, generateWall
         runButtonText = 'Completed'
         runButtonClass = 'completed'
         runButtonDisabled = true
+        generateWallsButtonDisabled = true
     }
 
     return (
