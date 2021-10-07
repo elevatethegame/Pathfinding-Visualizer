@@ -7,11 +7,13 @@ import '../css/Menu.css'
 import { setBFSAlgorithm, toggleVisitedNode, toggleFrontierNode,
     setAlgorithmState, readyAlgorithm, runAlgorithm, pauseAlgorithm, completeAlgorithm,
     togglePathNode, setParentNode, generateWalls, clearBoard, clearPath, clearAlgorithmState, 
-    resetStartMaskedNode, resetEndMaskedNode, setDFSAlgorithm } from '../actions'
+    resetStartMaskedNode, resetEndMaskedNode, setDFSAlgorithm, setAStarAlgorithm, setGreedyAlgorithm,
+    setEstimateValues } from '../actions'
 import { connect } from 'react-redux'
 import { runBFS } from '../utils/Algorithms/BFS'
 import { runDFS } from '../utils/Algorithms/DFS'
 import { isAlgorithmRunning, isAlgorithmCompleted, isAlgorithmReady } from '../utils/AlgorithmUtil'
+import { runAStar } from '../utils/Algorithms/ASTAR'
 
 function Menu(props) {
 
@@ -37,6 +39,10 @@ function Menu(props) {
                     props.toggleFrontierNode, props.togglePathNode, props.completeAlgorithm, props.setParentNode, props.clearAlgorithmState)
                 break
             case 'ASTAR':
+                state = await runAStar(props.algorithmState, props.grid, props.startNode, props.endNode, props.toggleVisitedNode, 
+                    props.toggleFrontierNode, props.togglePathNode, props.completeAlgorithm, props.setParentNode, props.clearAlgorithmState,
+                    props.setEstimateValues)
+                break
                 break
             case 'GREEDY':
                 break
@@ -83,6 +89,8 @@ const mapDispatchToProps = (dispatch) => {
     return {
         setBFSAlgorithm: () => dispatch(setBFSAlgorithm()),
         setDFSAlgorithm: () => dispatch(setDFSAlgorithm()),
+        setAStarAlgorithm: () => dispatch(setAStarAlgorithm()),
+        setGreedyAlgorithm: () => dispatch(setGreedyAlgorithm()),
         toggleVisitedNode: (row, col) => dispatch(toggleVisitedNode(row, col)),
         toggleFrontierNode: (row, col) => dispatch(toggleFrontierNode(row, col)),
         togglePathNode: (row, col) => dispatch(togglePathNode(row, col)),
@@ -98,6 +106,7 @@ const mapDispatchToProps = (dispatch) => {
         clearPath: () => dispatch(clearPath()),
         resetStartMaskedNode: () => dispatch(resetStartMaskedNode()),
         resetEndMaskedNode: () => dispatch(resetEndMaskedNode()),
+        setEstimateValues: (row, col, f, g, h) => dispatch(setEstimateValues(row, col, f, g, h)),
     }
 }
 

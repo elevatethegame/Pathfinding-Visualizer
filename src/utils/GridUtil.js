@@ -10,6 +10,9 @@ export function Node() {
     this.isVisitedNode = false
     this.isPathNode = false
     this.parent = null  // coordinates of the parent
+    this.g = null  // to be used by Astar and Greedy algorithms
+    this.h = null
+    this.f = null
 }
 
 export const initializeStartNode = () => {
@@ -159,6 +162,14 @@ export const setEndNode = (grid, {row, col}) => {
 export const setParentNode = (grid, {row, col, parent}) => {
     grid = grid.slice()
     grid[row][col].parent = parent;
+    return grid
+}
+
+export const setEstimateValues = (grid, {f, g, h, row, col}) => {
+    grid = grid.slice()
+    grid[row][col].f = f;
+    grid[row][col].g = g;
+    grid[row][col].h = h;
     return grid
 }
 

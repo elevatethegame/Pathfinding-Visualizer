@@ -28,6 +28,7 @@ export const RESET_START_MASKED_NODE = "RESET_START_MASKED_NODE"
 export const SET_END_MASKED_NODE = "SET_END_MASKED_NODE"
 export const APPLY_END_MASKED_NODE = "APPLY_END_MASKED_NODE"
 export const RESET_END_MASKED_NODE = "RESET_END_MASKED_NODE"
+export const SET_ESTIMATE_VALUES = "SET_ESTIMATE_VALUES"
 
 
 // action creators for grid state
@@ -88,6 +89,13 @@ export const clearBoard = () => {
 export const clearPath = () => {
     return {
         type: CLEAR_PATH
+    }
+}
+
+export const setEstimateValues = (row, col, f, g, h) => {
+    return {
+        type: SET_ESTIMATE_VALUES,
+        payload: {f, g, h, row, col}
     }
 }
 

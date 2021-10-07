@@ -74,3 +74,7 @@ export const sleep = (duration) => {
         setTimeout(resolve, duration)
     })
 }
+
+export const calculateManhattanDistance = (start, end) => {
+    return Math.abs(start.row - end.row) + Math.abs(start.col - end.col)
+}
