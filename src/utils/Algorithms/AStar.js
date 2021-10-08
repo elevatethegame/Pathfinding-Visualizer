@@ -24,7 +24,7 @@ export const runAStar = async (priorityQueue, grid, startNode, endNode, toggleVi
             return
         }
 
-        // Perform one iteration of BFS
+        // Perform one iteration of A Star
         const currNode = priorityQueue.dequeue()
         toggleVisitedNode(currNode.row, currNode.col)
         toggleFrontierNode(currNode.row, currNode.col)  // this node is no longer a frontier node

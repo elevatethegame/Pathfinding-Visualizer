@@ -1,6 +1,7 @@
 import { rerunAStar } from "./Algorithms/AStar"
 import { rerunBFS } from "./Algorithms/BFS"
 import { rerunDFS } from "./Algorithms/DFS"
+import { rerunGreedy } from "./Algorithms/Greedy"
 
 // Node constructor
 export function Node() {
@@ -87,6 +88,7 @@ export const generateRerunAlgorithmGrid = (grid, startNode, endNode, algorithmSe
             grid = rerunAStar(grid, startNode, endNode)
             break
         case 'GREEDY':
+            grid = rerunGreedy(grid, startNode, endNode)
             break
         default:
             break

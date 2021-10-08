@@ -14,6 +14,7 @@ import { runBFS } from '../utils/Algorithms/BFS'
 import { runDFS } from '../utils/Algorithms/DFS'
 import { runAStar } from '../utils/Algorithms/AStar'
 import { isAlgorithmRunning, isAlgorithmCompleted, isAlgorithmReady } from '../utils/AlgorithmUtil'
+import { runGreedy } from '../utils/Algorithms/Greedy'
 
 function Menu(props) {
 
@@ -43,6 +44,8 @@ function Menu(props) {
                     props.toggleFrontierNode, props.togglePathNode, props.completeAlgorithm, props.setParentNode, props.setEstimateValues)
                 break
             case 'GREEDY':
+                state = await runGreedy(props.algorithmState, props.grid, props.startNode, props.endNode, props.toggleVisitedNode, 
+                    props.toggleFrontierNode, props.togglePathNode, props.completeAlgorithm, props.setParentNode, props.setEstimateValues)
                 break
             default:
                 break
