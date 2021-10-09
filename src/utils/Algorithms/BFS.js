@@ -12,6 +12,7 @@ export const runBFS = async (queue, grid, startNode, endNode, toggleVisitedNode,
         if (!queue) {
             queue = new Queue()
             queue.enqueue(startNode)
+            toggleFrontierNode(startNode.row, startNode.col)
         }
 
         if (queue.size === 0) {  // No path was found

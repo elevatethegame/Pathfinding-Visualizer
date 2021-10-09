@@ -32,6 +32,7 @@ export const runAStar = async (algorithmState, grid, startNode, endNode, toggleV
             const f = h + g
             setEstimateValues(startNode.row, startNode.col, f, g, h)
             priorityQueue.push(startNode)
+            toggleFrontierNode(startNode.row, startNode.col)
             costGrid[startNode.row][startNode.col] = 0
         }
 

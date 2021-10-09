@@ -15,6 +15,7 @@ export const runGreedy = async (priorityQueue, grid, startNode, endNode, toggleV
             const f = calculateManhattanDistance(startNode, endNode)
             setEstimateValues(startNode.row, startNode.col, f, null, null)
             priorityQueue.push(startNode)
+            toggleFrontierNode(startNode.row, startNode.col)
         }
 
         if (priorityQueue.size === 0) {  // No path was found

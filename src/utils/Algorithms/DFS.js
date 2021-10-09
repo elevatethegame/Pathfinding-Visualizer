@@ -12,6 +12,7 @@ export const runDFS = async (stack, grid, startNode, endNode, toggleVisitedNode,
         if (!stack) {
             stack = new Stack()
             stack.push(startNode)
+            toggleFrontierNode(startNode.row, startNode.col)
         }
 
         if (stack.size === 0) {  // No path was found
