@@ -1,6 +1,6 @@
 import { isAlgorithmRunning, nodeEquals, shouldAddNode, getNeighbors, 
     sleep, tracePath, setPath } from '../AlgorithmUtil'
-import buckets from 'buckets-js'
+import Queue from 'mnemonist/queue'
 
 export const runBFS = async (queue, grid, startNode, endNode, toggleVisitedNode, toggleFrontierNode,
     togglePathNode, completeAlgorithm, setParentNode) => {
@@ -10,11 +10,11 @@ export const runBFS = async (queue, grid, startNode, endNode, toggleVisitedNode,
         
         // Create a new queue if the current algorithm state is empty; this is the first iteration
         if (!queue) {
-            queue = buckets.Queue()
+            queue = new Queue()
             queue.enqueue(startNode)
         }
 
-        if (queue.isEmpty()) {  // No path was found
+        if (queue.size === 0) {  // No path was found
             completeAlgorithm()
             return
         }
@@ -52,9 +52,9 @@ export const runBFS = async (queue, grid, startNode, endNode, toggleVisitedNode,
 // corresponding to the completed algorithm 
 // (rerun does not have the tracing animation; no timeout between each node visit => instantaneous render of traversed graph)
 export const rerunBFS = (grid, startNode, endNode) => {
-    const queue = buckets.Queue()
+    const queue = new Queue()
     queue.enqueue(startNode)
-    while (!queue.isEmpty()) {
+    while (queue.size > 0) {
         const currNode = queue.dequeue()
         grid[currNode.row][currNode.col].isVisitedNode = true
         grid[currNode.row][currNode.col].isFrontierNode = false  // this node is no longer a frontier node

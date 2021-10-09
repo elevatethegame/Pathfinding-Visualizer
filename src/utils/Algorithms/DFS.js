@@ -1,6 +1,6 @@
 import { isAlgorithmRunning, nodeEquals, shouldAddNode, getNeighbors, 
     sleep, tracePath, setPath } from '../AlgorithmUtil'
-import buckets from 'buckets-js'
+import Stack from 'mnemonist/stack'
 
 export const runDFS = async (stack, grid, startNode, endNode, toggleVisitedNode, toggleFrontierNode,
     togglePathNode, completeAlgorithm, setParentNode) => {
@@ -10,11 +10,11 @@ export const runDFS = async (stack, grid, startNode, endNode, toggleVisitedNode,
         
         // Create a new stack if the current algorithm state is empty; this is the first iteration
         if (!stack) {
-            stack = buckets.Stack()
+            stack = new Stack()
             stack.push(startNode)
         }
 
-        if (stack.isEmpty()) {  // No path was found
+        if (stack.size === 0) {  // No path was found
             completeAlgorithm()  // set the status to COMPLETED
             return
         }
@@ -52,9 +52,9 @@ export const runDFS = async (stack, grid, startNode, endNode, toggleVisitedNode,
 // corresponding to the completed algorithm 
 // (rerun does not have the tracing animation; no timeout between each node visit => instantaneous render of traversed graph)
 export const rerunDFS = (grid, startNode, endNode) => {
-    const stack = buckets.Stack()
+    const stack = new Stack()
     stack.push(startNode)
-    while (!stack.isEmpty()) {
+    while (stack.size > 0) {
         const currNode = stack.pop()
         grid[currNode.row][currNode.col].isVisitedNode = true
         grid[currNode.row][currNode.col].isFrontierNode = false  // this node is no longer a frontier node

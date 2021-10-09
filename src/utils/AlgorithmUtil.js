@@ -32,12 +32,13 @@ export const getNeighbors = (node) => {
 }
 
 // Enqueue the Node only if it is within the range of the grid, not visited, not a frontier and not a wall node
-export const shouldAddNode = (node, grid) => {
+export const shouldAddNode = (node, grid, allowDuplicateFrontier = false) => {
     const m = grid.length
     const n = grid[0].length
     const i = node.row
     const j = node.col
-    return i >= 0 && i < m && j >= 0 && j < n && !grid[i][j].isVisitedNode && !grid[i][j].isWallNode && !grid[i][j].isFrontierNode
+    return i >= 0 && i < m && j >= 0 && j < n && !grid[i][j].isVisitedNode && !grid[i][j].isWallNode && 
+        (!grid[i][j].isFrontierNode || allowDuplicateFrontier)
 }
 
 export const tracePath = async (endNode, grid, togglePathNode) => {

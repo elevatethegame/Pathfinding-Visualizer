@@ -1,6 +1,6 @@
 import { isAlgorithmRunning, nodeEquals, shouldAddNode, getNeighbors, 
     sleep, tracePath, setPath, calculateManhattanDistance } from '../AlgorithmUtil'
-import buckets from 'buckets-js'
+import Heap from 'mnemonist/heap'
 
 export const runGreedy = async (priorityQueue, grid, startNode, endNode, toggleVisitedNode, toggleFrontierNode,
     togglePathNode, completeAlgorithm, setParentNode, setEstimateValues) => {
@@ -9,21 +9,21 @@ export const runGreedy = async (priorityQueue, grid, startNode, endNode, toggleV
     while (isAlgorithmRunning()) {
         // Create a new priorityQueue if the current algorithm state is empty; this is the first iteration
         if (!priorityQueue) {
-            priorityQueue = buckets.PriorityQueue((node_1, node_2) => {
-                return grid[node_2.row][node_2.col].f - grid[node_1.row][node_1.col].f
+            priorityQueue = new Heap((node_1, node_2) => {
+                return grid[node_1.row][node_1.col].f - grid[node_2.row][node_2.col].f
             })
             const f = calculateManhattanDistance(startNode, endNode)
             setEstimateValues(startNode.row, startNode.col, f, null, null)
-            priorityQueue.enqueue(startNode)
+            priorityQueue.push(startNode)
         }
 
-        if (priorityQueue.isEmpty()) {  // No path was found
+        if (priorityQueue.size === 0) {  // No path was found
             completeAlgorithm()
             return
         }
 
         // Perform one iteration of Greedy
-        const currNode = priorityQueue.dequeue()
+        const currNode = priorityQueue.pop()
         toggleVisitedNode(currNode.row, currNode.col)
         toggleFrontierNode(currNode.row, currNode.col)  // this node is no longer a frontier node
 
@@ -40,7 +40,7 @@ export const runGreedy = async (priorityQueue, grid, startNode, endNode, toggleV
                 setEstimateValues(neighbor.row, neighbor.col, f, null, null)
                 toggleFrontierNode(neighbor.row, neighbor.col)
                 setParentNode(neighbor.row, neighbor.col, { ...currNode })
-                priorityQueue.enqueue(neighbor)
+                priorityQueue.push(neighbor)
             }
         }
 
@@ -57,14 +57,14 @@ export const runGreedy = async (priorityQueue, grid, startNode, endNode, toggleV
 // corresponding to the completed algorithm 
 // (rerun does not have the tracing animation; no timeout between each node visit => instantaneous render of traversed graph)
 export const rerunGreedy = (grid, startNode, endNode) => {
-    const priorityQueue = buckets.PriorityQueue((node_1, node_2) => {
-        return grid[node_2.row][node_2.col].f - grid[node_1.row][node_1.col].f
+    const priorityQueue = new Heap((node_1, node_2) => {
+        return grid[node_1.row][node_1.col].f - grid[node_2.row][node_2.col].f
     })
     const f = calculateManhattanDistance(startNode, endNode)
     grid[startNode.row][startNode.col].f = f
-    priorityQueue.enqueue(startNode)
-    while (!priorityQueue.isEmpty()) {
-        const currNode = priorityQueue.dequeue()
+    priorityQueue.push(startNode)
+    while (priorityQueue.size > 0) {
+        const currNode = priorityQueue.pop()
         grid[currNode.row][currNode.col].isVisitedNode = true
         grid[currNode.row][currNode.col].isFrontierNode = false  // this node is no longer a frontier node
 
@@ -80,7 +80,7 @@ export const rerunGreedy = (grid, startNode, endNode) => {
                 grid[neighbor.row][neighbor.col].f = f
                 grid[neighbor.row][neighbor.col].isFrontierNode = true
                 grid[neighbor.row][neighbor.col].parent = { ...currNode }
-                priorityQueue.enqueue(neighbor)
+                priorityQueue.push(neighbor)
             }
         }
 
