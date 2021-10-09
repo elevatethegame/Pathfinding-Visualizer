@@ -56,20 +56,30 @@
 
 .unselected {
     background-color: darkgrey;
+    transition: background-color 0.2s ease-out;
+    cursor: default;
 }
 
 .run {
     background-color: rgb(71, 192, 71);
+    transition: background-color 0.2s ease-out;
 }
 
-.resume {
-    background-color: rgb(71, 192, 71);
+.run:hover {
+    background-color: rgb(42, 158, 42);
 }
 
 .pause {
     background-color: rgb(211, 48, 48);
+    transition: background-color 0.2s ease-out;
+}
+
+.pause:hover {
+    background-color: rgb(148, 37, 37);
 }
 
 .completed {
     background-color: rgb(216, 186, 17);
+    transition: background-color 0.2s ease-out;
+    cursor: default;
 }

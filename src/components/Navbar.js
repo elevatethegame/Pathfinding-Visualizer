@@ -41,7 +41,7 @@ function Navbar({ algorithmStatus, algorithmSelected, runAlgorithm, generateWall
         runButtonClass = 'run'
     } else if (algorithmStatus === 'PAUSED') {
         runButtonText = 'Resume'
-        runButtonClass = 'resume'
+        runButtonClass = 'run'
         generateWallsButtonDisabled = true
     } else if (algorithmStatus === 'RUNNING') {
         runButtonText = 'Pause'

@@ -61,6 +61,7 @@
 .carousel-navigation-button {
     font-size: 20px;
     color: rgb(187, 187, 187);
+    transition: color 0.3s ease-out;
     margin: 0 5px 0 5px;
 }
 
@@ -80,6 +81,7 @@
     right: 18px;
     font-size: 40px;
     color: rgb(167, 50, 50);
+    transition: color 0.3s ease-out;
 }
 
 .window-close-icon:hover {
@@ -90,6 +92,7 @@
 .arrow-circle-icon {
     font-size: 40px;
     color: rgb(39, 102, 161);
+    transition: color 0.3s ease-out;
 }
 
 .arrow-circle-icon:hover {
@@ -109,6 +112,7 @@
     padding: 10px 20px;
     color: white;
     font-size: 19px;
+    transition: background-color 0.3s ease-out;
 }
 
 .carousel-select-button:hover {
