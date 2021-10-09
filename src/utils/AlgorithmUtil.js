@@ -48,7 +48,7 @@ export const tracePath = async (endNode, grid, togglePathNode) => {
         stack.push(node)
         node = grid[node.row][node.col].parent
     }
-    while (!stack.isEmpty()) {
+    while (stack.size > 0) {
         node = stack.pop()
         togglePathNode(node.row, node.col)
         await sleep(40)
@@ -64,7 +64,7 @@ export const setPath = (endNode, grid) => {
         stack.push(node)
         node = grid[node.row][node.col].parent
     }
-    while (!stack.isEmpty()) {
+    while (stack.size > 0) {
         node = stack.pop()
         grid[node.row][node.col].isPathNode = true
     }
