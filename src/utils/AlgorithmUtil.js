@@ -1,5 +1,5 @@
 import store from "../"
-import buckets from 'buckets-js'
+import Stack from 'mnemonist/stack'
 
 export const isAlgorithmRunning = () => {
     return store.getState().algorithmStatus === 'RUNNING'
@@ -43,7 +43,7 @@ export const shouldAddNode = (node, grid, allowDuplicateFrontier = false) => {
 
 export const tracePath = async (endNode, grid, togglePathNode) => {
     let node = endNode
-    const stack = buckets.Stack() 
+    const stack = new Stack() 
     while (node != null) {
         stack.push(node)
         node = grid[node.row][node.col].parent
@@ -59,7 +59,7 @@ export const tracePath = async (endNode, grid, togglePathNode) => {
 // without having the trace animation (no intervals between each path node animation)
 export const setPath = (endNode, grid) => {
     let node = endNode
-    const stack = buckets.Stack() 
+    const stack = new Stack() 
     while (node != null) {
         stack.push(node)
         node = grid[node.row][node.col].parent
